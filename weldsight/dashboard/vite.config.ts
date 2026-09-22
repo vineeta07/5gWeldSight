@@ -44,6 +44,10 @@ export default defineConfig(({ mode }) => {
               purpose: 'any maskable'
             }
           ]
+        },
+        workbox: {
+          navigateFallback: '/index.html',
+          navigateFallbackAllowlist: [/^(?!\/__).*/]
         }
       }),
       tailwindcss(),
