@@ -8,7 +8,24 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [active, setActive] = useState("");
   const [hidden, setHidden] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
   const progressRef = useRef(null);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+    return () => window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === "accepted") setDeferredPrompt(null);
+  };
 
   // Highlight the link for the section in the middle of the screen
   useEffect(() => {
@@ -91,6 +108,7 @@ const Navbar = () => {
             </svg>
             Chat
           </button>
+          {/* Install App button is only visible in the mobile menu */}
           <a
             href={DASHBOARD_URL}
             target="_blank"
@@ -135,10 +153,18 @@ const Navbar = () => {
                 setMenuOpen(false);
                 openChat();
               }}
-              className="self-start mt-2 btn"
+              className="self-start mt-2 btn-outline"
             >
               Ask WeldSight AI
             </button>
+            {deferredPrompt && (
+              <button
+                onClick={handleInstallClick}
+                className="self-start btn bg-blue text-white shadow-lg animate-pulse"
+              >
+                Install App
+              </button>
+            )}
             <a
               href={DASHBOARD_URL}
               target="_blank"
