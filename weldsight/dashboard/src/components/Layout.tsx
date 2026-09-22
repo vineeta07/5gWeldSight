@@ -138,16 +138,6 @@ export default function Layout() {
         </nav>
 
         <div className="border-t border-slate-200 p-2 space-y-1">
-          {deferredPrompt && (
-            <button
-              onClick={handleInstallClick}
-              className={`w-full flex items-center gap-3 px-2.5 py-2 rounded-md text-sm text-emerald-700 hover:bg-emerald-50`}
-              title={collapsed ? "Install app" : undefined}
-            >
-              <Download size={17} className="flex-shrink-0" />
-              {!collapsed && "Install app"}
-            </button>
-          )}
           <button
             onClick={() => setAssistantOpen((o) => !o)}
             className={`w-full flex items-center gap-3 px-2.5 py-2 rounded-md text-sm ${assistantOpen ? "bg-emerald-600 text-white" : "text-slate-700 hover:bg-slate-100"}`}
@@ -178,7 +168,15 @@ export default function Layout() {
         <header className="flex items-center justify-between px-5 h-14 border-b border-slate-200 bg-white flex-shrink-0">
           <ConnectionStatus />
           <div className="flex items-center gap-4">
-            {/* removed demo badge for presentation */}
+            {deferredPrompt && (
+              <button
+                onClick={handleInstallClick}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold bg-emerald-600 text-white shadow-sm hover:bg-emerald-700 animate-pulse"
+              >
+                <Download size={14} />
+                Install App
+              </button>
+            )}
             <Clock />
           </div>
         </header>
