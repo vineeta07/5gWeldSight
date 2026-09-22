@@ -1,7 +1,7 @@
 import { navLinks, techStack } from "../constants";
 import { openChat } from "../utils/chat";
 import { DASHBOARD_URL } from "../utils/api";
-import { logoBase64 as logoUrl } from "../logoBase64";
+const logoUrl = "/logo.png";
 
 const Footer = () => {
   return (

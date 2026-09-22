@@ -101,15 +101,15 @@ export default function Layout() {
 
   return (
     <div className="flex h-screen overflow-hidden bg-slate-50">
-      <aside className="flex flex-col border-r border-slate-200 bg-white transition-all duration-200 flex-shrink-0" style={{ width: collapsed ? 80 : 280 }}>
-        <div className="flex items-center gap-3 px-4 py-4 border-b border-slate-200 min-h-[80px]">
-          <button onClick={() => collapsed && setCollapsed(false)} className="flex-shrink-0 outline-none cursor-pointer" title={collapsed ? "Expand sidebar" : ""}>
-            <img src={logoUrl} alt="WeldSight" className={`object-contain transition-all duration-200 ${collapsed ? "w-10 h-10 hover:scale-105" : "w-12 h-12 md:w-16 md:h-16"}`} />
+      <aside className="flex flex-col border-r border-slate-200 bg-white transition-all duration-200 flex-shrink-0" style={{ width: collapsed ? 80 : 240 }}>
+        <div className={`flex items-center gap-0 p-0 border-b border-slate-200 min-h-[80px] ${collapsed ? 'justify-center w-full' : ''}`}>
+          <button onClick={() => collapsed && setCollapsed(false)} className={`flex-shrink-0 outline-none cursor-pointer ${collapsed ? '' : '-ml-2'}`} title={collapsed ? "Expand sidebar" : ""}>
+            <img src="/logo.png" alt="WeldSight" className={`object-contain transition-all duration-200 ${collapsed ? "w-12 h-12 hover:scale-105" : "w-20 h-20 md:w-24 md:h-24"}`} />
           </button>
           {!collapsed && (
-            <div className="min-w-0 flex-1">
+            <div className="min-w-0 flex-1 ml-0">
               <div className="text-lg font-bold text-slate-900 leading-tight">WeldSight</div>
-              <div className="text-sm text-slate-500 leading-tight">Industry inspection</div>
+              <div className="text-xs text-slate-500 leading-tight whitespace-nowrap tracking-tight">Industry inspection</div>
             </div>
           )}
           {!collapsed && (
@@ -171,7 +171,7 @@ export default function Layout() {
             {deferredPrompt && (
               <button
                 onClick={handleInstallClick}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold bg-emerald-600 text-white shadow-sm hover:bg-emerald-700 animate-pulse"
+                className="inline-flex sm:hidden items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold bg-emerald-600 text-white shadow-sm hover:bg-emerald-700 animate-pulse"
               >
                 <Download size={14} />
                 Install App

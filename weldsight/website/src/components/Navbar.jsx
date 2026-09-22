@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { navLinks } from "../constants";
 import { openChat } from "../utils/chat";
 import { DASHBOARD_URL } from "../utils/api";
-import { logoBase64 as logoUrl } from "../logoBase64";
+const logoUrl = "/logo.png";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -85,7 +85,7 @@ const Navbar = () => {
           <span className="font-bold text-lg sm:text-xl md:text-2xl tracking-wide text-white md:-ml-2">WeldSight</span>
         </a>
 
-        <div className="hidden lg:flex items-center gap-8 text-sm font-medium">
+        <div className="hidden lg:flex items-center gap-8 text-base font-semibold">
           {navLinks.map(({ id, label }) => (
             <a
               key={id}
@@ -108,7 +108,6 @@ const Navbar = () => {
             </svg>
             Chat
           </button>
-          {/* Install App button is only visible in the mobile menu */}
           <a
             href={DASHBOARD_URL}
             target="_blank"

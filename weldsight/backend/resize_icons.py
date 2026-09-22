@@ -14,6 +14,6 @@ def resize_pad(img_path, out_path, size):
     resized = cv2.resize(padded, (size, size), interpolation=cv2.INTER_AREA)
     cv2.imwrite(out_path, resized)
 
-resize_pad("../dashboard/public/logo.png", "../dashboard/public/pwa-192x192.png", 192)
-resize_pad("../dashboard/public/logo.png", "../dashboard/public/pwa-512x512.png", 512)
+resize_pad("../dashboard/public/logoblack.png", "../dashboard/public/pwa-192x192.png", 192)
+resize_pad("../dashboard/public/logoblack.png", "../dashboard/public/pwa-512x512.png", 512)
 print("Icons created!")

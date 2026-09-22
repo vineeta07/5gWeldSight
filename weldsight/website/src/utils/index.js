@@ -4,11 +4,11 @@
 const asset = (path) => encodeURI(`/assets/${path}`);
 
 // Videos
-export const weldsightHeroVideo = asset("videosweldsight/hero0.mp4?v=2");
-export const highlightFirstVideo = asset("videosweldsight/highlight1.mp4?v=2");
-export const highlightSecondVideo = asset("videosweldsight/highlight2.mp4?v=2");
-export const highlightThirdVideo = asset("videosweldsight/highlight3.mp4?v=2");
-export const highlightFourthVideo = asset("videosweldsight/highlight4.mp4?v=2");
+export const weldsightHeroVideo = asset("videosweldsight/hero0.mp4?v=3");
+export const highlightFirstVideo = asset("videosweldsight/highlight1.mp4?v=3");
+export const highlightSecondVideo = asset("videosweldsight/highlight2.mp4?v=3");
+export const highlightThirdVideo = asset("videosweldsight/highlight3.mp4?v=3");
+export const highlightFourthVideo = asset("videosweldsight/highlight4.mp4?v=3");
 
 // Exhibition photos
 export const exhibitionImage = asset("welsight images/exhibition.jpeg");
