@@ -3,7 +3,7 @@ export const config = { runtime: 'edge' };
 export default async function handler(request) {
   const url = new URL(request.url);
   const apiPath = url.pathname; // e.g. /api/health
-  const backendUrl = `https://weldsight-api-5g.loca.lt${apiPath}${url.search}`;
+  const backendUrl = `https://weldsight-api-6g.loca.lt${apiPath}${url.search}`;
 
   const headers = new Headers(request.headers);
   headers.set('Bypass-Tunnel-Reminder', 'true');
