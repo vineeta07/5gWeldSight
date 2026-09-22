@@ -1,0 +1,49 @@
+# Alternative to Hugging Face + Vercel: deploy everything on Render with one Blueprint.
+# Render > New > Blueprint > pick this repo. Fill in the "sync: false" values when asked.
+# Note: the model needs ~1 GB RAM, so the backend needs at least the "standard" plan.
+services:
+  - type: web
+    name: weldsight-api
+    runtime: docker
+    rootDir: backend
+    plan: standard
+    healthCheckPath: /api/health
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: MODEL_URL # GitHub can't hold the 123 MB model, so it's downloaded at startup
+        sync: false
+      - key: ALLOWED_ORIGINS
+        value: https://weldsight-website.onrender.com,https://weldsight-dashboard.onrender.com
+      - key: SITE_URL
+        value: https://weldsight-website.onrender.com
+      - key: DASHBOARD_URL
+        value: https://weldsight-dashboard.onrender.com
+
+  - type: web
+    name: weldsight-website
+    runtime: static
+    rootDir: website
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://weldsight-api.onrender.com
+      - key: VITE_DASHBOARD_URL
+        value: https://weldsight-dashboard.onrender.com
+
+  - type: web
+    name: weldsight-dashboard
+    runtime: static
+    rootDir: dashboard
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        value: https://weldsight-api.onrender.com
+      - key: VITE_SITE_URL
+        value: https://weldsight-website.onrender.com

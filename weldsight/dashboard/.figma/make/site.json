@@ -1,0 +1,11 @@
+{
+  "description": "Inspection dashboard for WeldSight: live camera feeds, rust detection, defect reports and an assistant.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  },
+  "title": "WeldSight dashboard"
+}

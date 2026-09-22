@@ -1,0 +1,291 @@
+{
+  "note": "Simulated demo data generated alongside the videos",
+  "cameras": [
+    {
+      "id": "CAM-01",
+      "name": "WELD BAY A - LIVE ARC",
+      "sector": "W-01",
+      "type": "RGB"
+    },
+    {
+      "id": "CAM-02",
+      "name": "SEAM SCANNER - POST-WELD",
+      "sector": "W-02",
+      "type": "RGB MACRO"
+    },
+    {
+      "id": "CAM-03",
+      "name": "THERMAL - COOLING PROFILE",
+      "sector": "W-01",
+      "type": "LWIR THERMAL"
+    },
+    {
+      "id": "CAM-04",
+      "name": "PIPELINE P-12 - GIRTH WELD",
+      "sector": "P-12",
+      "type": "CRAWLER RGB"
+    }
+  ],
+  "incidents": [
+    {
+      "incident_code": "WLD-2026-0001",
+      "camera_id": "CAM-02",
+      "camera_name": "SEAM SCANNER - POST-WELD",
+      "sector": "W-02",
+      "timestamp": "2026-09-22T14:32:07.500000",
+      "video_file": "cam02_seam_scanner.mp4",
+      "video_time_s": 2.5,
+      "object_type": "weld_defect",
+      "tracking_id": "D-101",
+      "confidence": 88,
+      "threat_type": "Spatter",
+      "risk_score": 20,
+      "risk_level": "LOW",
+      "status": "NEW",
+      "ai_reasons": [
+        "Spatter beads beside toe"
+      ],
+      "timeline": [
+        {
+          "time": "2026-09-22T14:32:07.500000",
+          "event": "D-101 detected by CAM-02",
+          "status": "done"
+        }
+      ]
+    },
+    {
+      "incident_code": "WLD-2026-0002",
+      "camera_id": "CAM-01",
+      "camera_name": "WELD BAY A - LIVE ARC",
+      "sector": "W-01",
+      "timestamp": "2026-09-22T14:32:09.466667",
+      "video_file": "cam01_weld_bay_live_arc.mp4",
+      "video_time_s": 4.47,
+      "object_type": "weld_defect",
+      "tracking_id": "D-001",
+      "confidence": 91,
+      "threat_type": "Porosity",
+      "risk_score": 75,
+      "risk_level": "HIGH",
+      "status": "NEW",
+      "ai_reasons": [
+        "Cluster of 9 gas pores in bead"
+      ],
+      "timeline": [
+        {
+          "time": "2026-09-22T14:32:09.466667",
+          "event": "D-001 detected by CAM-01",
+          "status": "done"
+        }
+      ]
+    },
+    {
+      "incident_code": "WLD-2026-0003",
+      "camera_id": "CAM-04",
+      "camera_name": "PIPELINE P-12 - GIRTH WELD",
+      "sector": "P-12",
+      "timestamp": "2026-09-22T14:32:09.900000",
+      "video_file": "cam04_pipeline_girth_weld.mp4",
+      "video_time_s": 4.9,
+      "object_type": "weld_defect",
+      "tracking_id": "D-301",
+      "confidence": 94,
+      "threat_type": "Burn-Through",
+      "risk_score": 92,
+      "risk_level": "CRITICAL",
+      "status": "NEW",
+      "ai_reasons": [
+        "Hole through root at 6 o'clock position"
+      ],
+      "timeline": [
+        {
+          "time": "2026-09-22T14:32:09.900000",
+          "event": "D-301 detected by CAM-04",
+          "status": "done"
+        }
+      ]
+    },
+    {
+      "incident_code": "WLD-2026-0004",
+      "camera_id": "CAM-02",
+      "camera_name": "SEAM SCANNER - POST-WELD",
+      "sector": "W-02",
+      "timestamp": "2026-09-22T14:32:10",
+      "video_file": "cam02_seam_scanner.mp4",
+      "video_time_s": 5.0,
+      "object_type": "weld_defect",
+      "tracking_id": "D-102",
+      "confidence": 95,
+      "threat_type": "Transverse Crack",
+      "risk_score": 92,
+      "risk_level": "CRITICAL",
+      "status": "NEW",
+      "ai_reasons": [
+        "Crack across bead - reject"
+      ],
+      "timeline": [
+        {
+          "time": "2026-09-22T14:32:10",
+          "event": "D-102 detected by CAM-02",
+          "status": "done"
+        }
+      ]
+    },
+    {
+      "incident_code": "WLD-2026-0005",
+      "camera_id": "CAM-03",
+      "camera_name": "THERMAL - COOLING PROFILE",
+      "sector": "W-01",
+      "timestamp": "2026-09-22T14:32:12.166667",
+      "video_file": "cam03_thermal_cooling.mp4",
+      "video_time_s": 7.17,
+      "object_type": "weld_defect",
+      "tracking_id": "D-201",
+      "confidence": 82,
+      "threat_type": "Abnormal Cooling",
+      "risk_score": 75,
+      "risk_level": "HIGH",
+      "status": "NEW",
+      "ai_reasons": [
+        "Section cooled ~3x faster than neighbours; possible lack of fusion"
+      ],
+      "timeline": [
+        {
+          "time": "2026-09-22T14:32:12.166667",
+          "event": "D-201 detected by CAM-03",
+          "status": "done"
+        }
+      ]
+    },
+    {
+      "incident_code": "WLD-2026-0006",
+      "camera_id": "CAM-02",
+      "camera_name": "SEAM SCANNER - POST-WELD",
+      "sector": "W-02",
+      "timestamp": "2026-09-22T14:32:12.500000",
+      "video_file": "cam02_seam_scanner.mp4",
+      "video_time_s": 7.5,
+      "object_type": "weld_defect",
+      "tracking_id": "D-103",
+      "confidence": 90,
+      "threat_type": "Porosity",
+      "risk_score": 75,
+      "risk_level": "HIGH",
+      "status": "NEW",
+      "ai_reasons": [
+        "Scattered pores in cap"
+      ],
+      "timeline": [
+        {
+          "time": "2026-09-22T14:32:12.500000",
+          "event": "D-103 detected by CAM-02",
+          "status": "done"
+        }
+      ]
+    },
+    {
+      "incident_code": "WLD-2026-0007",
+      "camera_id": "CAM-01",
+      "camera_name": "WELD BAY A - LIVE ARC",
+      "sector": "W-01",
+      "timestamp": "2026-09-22T14:32:12.733333",
+      "video_file": "cam01_weld_bay_live_arc.mp4",
+      "video_time_s": 7.73,
+      "object_type": "weld_defect",
+      "tracking_id": "D-002",
+      "confidence": 84,
+      "threat_type": "Undercut",
+      "risk_score": 45,
+      "risk_level": "MEDIUM",
+      "status": "NEW",
+      "ai_reasons": [
+        "Groove along top toe, 9 mm long"
+      ],
+      "timeline": [
+        {
+          "time": "2026-09-22T14:32:12.733333",
+          "event": "D-002 detected by CAM-01",
+          "status": "done"
+        }
+      ]
+    },
+    {
+      "incident_code": "WLD-2026-0008",
+      "camera_id": "CAM-04",
+      "camera_name": "PIPELINE P-12 - GIRTH WELD",
+      "sector": "P-12",
+      "timestamp": "2026-09-22T14:32:13.500000",
+      "video_file": "cam04_pipeline_girth_weld.mp4",
+      "video_time_s": 8.5,
+      "object_type": "weld_defect",
+      "tracking_id": "D-302",
+      "confidence": 80,
+      "threat_type": "External Corrosion",
+      "risk_score": 45,
+      "risk_level": "MEDIUM",
+      "status": "NEW",
+      "ai_reasons": [
+        "Corrosion patch 12 mm from weld toe"
+      ],
+      "timeline": [
+        {
+          "time": "2026-09-22T14:32:13.500000",
+          "event": "D-302 detected by CAM-04",
+          "status": "done"
+        }
+      ]
+    },
+    {
+      "incident_code": "WLD-2026-0009",
+      "camera_id": "CAM-01",
+      "camera_name": "WELD BAY A - LIVE ARC",
+      "sector": "W-01",
+      "timestamp": "2026-09-22T14:32:13.700000",
+      "video_file": "cam01_weld_bay_live_arc.mp4",
+      "video_time_s": 8.7,
+      "object_type": "person",
+      "tracking_id": "P-07",
+      "confidence": 93,
+      "threat_type": "Restricted Zone Intrusion (Arc Zone)",
+      "risk_score": 95,
+      "risk_level": "CRITICAL",
+      "status": "NEW",
+      "ai_reasons": [
+        "Hand/glove entered the arc exclusion zone while the arc was live"
+      ],
+      "timeline": [
+        {
+          "time": "2026-09-22T14:32:13.700000",
+          "event": "P-07 entered arc zone",
+          "status": "done"
+        }
+      ]
+    },
+    {
+      "incident_code": "WLD-2026-0010",
+      "camera_id": "CAM-02",
+      "camera_name": "SEAM SCANNER - POST-WELD",
+      "sector": "W-02",
+      "timestamp": "2026-09-22T14:32:15",
+      "video_file": "cam02_seam_scanner.mp4",
+      "video_time_s": 10.0,
+      "object_type": "weld_defect",
+      "tracking_id": "D-104",
+      "confidence": 86,
+      "threat_type": "Lack Of Fusion",
+      "risk_score": 75,
+      "risk_level": "HIGH",
+      "status": "NEW",
+      "ai_reasons": [
+        "Unfused line at lower toe"
+      ],
+      "timeline": [
+        {
+          "time": "2026-09-22T14:32:15",
+          "event": "D-104 detected by CAM-02",
+          "status": "done"
+        }
+      ]
+    }
+  ]
+}

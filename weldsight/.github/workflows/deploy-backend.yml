@@ -1,0 +1,35 @@
+# Pushes backend/ to your Hugging Face Space whenever it changes on main.
+# Setup: repo Settings > Secrets and variables > Actions
+#   secret   HF_TOKEN  (a Hugging Face token with write access)
+#   variable HF_SPACE  (e.g. your-username/weldsight-api)
+# The model file is uploaded to the Space once by hand (it is too big for GitHub),
+# so this workflow skips it.
+name: Deploy backend to Hugging Face
+on:
+  push:
+    branches: [main]
+    paths: ["backend/**"]
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install huggingface_hub
+      - name: Upload backend
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_SPACE: ${{ vars.HF_SPACE }}
+        run: |
+          python - <<'PY'
+          import os
+          from huggingface_hub import HfApi
+          HfApi(token=os.environ["HF_TOKEN"]).upload_folder(
+              folder_path="backend", repo_id=os.environ["HF_SPACE"], repo_type="space",
+              ignore_patterns=["model/*.onnx", ".env", "data/*", "**/__pycache__/*", "tests/*"],
+              commit_message="Deploy from GitHub",
+          )
+          PY

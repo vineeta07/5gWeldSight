@@ -1,0 +1,163 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --nav-h: 48px; /* Apple-style slim navbar */
+}
+
+html {
+  scroll-padding-top: var(--nav-h);
+  background: #000;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  color: white;
+  background: #000;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+:focus-visible {
+  outline: 2px solid #2997ff;
+  outline-offset: 3px;
+}
+
+::selection {
+  background: #2997ff;
+  color: white;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #000;
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 3px;
+}
+
+.gradient-text-static {
+  background: linear-gradient(135deg, #7dfffe, #2997ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* White-to-grey heading shine used on big statements */
+.shine-text {
+  background: linear-gradient(180deg, #fff 30%, #86868b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Weld-heat gradient for a single hero statement */
+.heat-text {
+  background: linear-gradient(90deg, #ffd27a, #ff6b35 45%, #2997ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@layer components {
+  /* Apple-style card: near-black, hairline border */
+  .glass-card {
+    background: rgba(22, 22, 23, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+  }
+}
+
+.glass-card-hover {
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+.glass-card-hover:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-4px);
+}
+
+.screen-max-width {
+  margin-inline: auto;
+  position: relative;
+  max-width: 1120px;
+}
+
+.carousel-track {
+  --slide-w: 88%;
+}
+@media (min-width: 768px) {
+  .carousel-track {
+    --slide-w: 80%;
+  }
+}
+.carousel-slide {
+  width: var(--slide-w);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+@layer utilities {
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+  .page-gutter {
+    @apply px-5 sm:px-10;
+  }
+  .section-pad {
+    @apply py-20 sm:py-32;
+  }
+
+  /* The reference site's signature: big, grey, medium-weight headings */
+  .section-heading {
+    @apply text-gray font-medium text-2xl md:text-4xl lg:text-5xl tracking-tight;
+  }
+  .section-subtitle {
+    @apply mt-4 text-gray text-lg md:text-xl font-semibold max-w-xl leading-snug;
+  }
+  /* Big centred statements (Features, How it works) */
+  .statement {
+    @apply text-4xl md:text-7xl font-semibold tracking-tight leading-[1.05];
+  }
+  /* Grey paragraph where the key phrase is white */
+  .feature-text {
+    @apply text-gray max-w-md text-lg md:text-xl font-semibold leading-snug;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center px-6 py-2.5 rounded-full bg-blue text-white font-medium border border-blue transition-colors duration-300 hover:bg-transparent hover:text-blue;
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center px-6 py-2.5 rounded-full bg-transparent border border-blue text-blue font-medium transition-colors duration-300 hover:bg-blue hover:text-white;
+  }
+  .link {
+    @apply text-blue hover:underline inline-flex items-center gap-1 text-lg md:text-xl;
+  }
+  .control-btn {
+    @apply w-14 h-14 rounded-full bg-gray-300 backdrop-blur flex-center transition-colors hover:bg-white/20;
+  }
+}

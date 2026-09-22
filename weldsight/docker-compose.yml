@@ -1,0 +1,34 @@
+# Run all three apps on one machine:  docker compose up --build
+#   website    http://localhost:5173
+#   dashboard  http://localhost:8443
+#   API        http://localhost:8000/docs
+# Put your Gemini key in backend/.env and the model in backend/model/ first.
+services:
+  api:
+    build: ./backend
+    env_file: ./backend/.env
+    environment:
+      PORT: "7860"
+      ALLOWED_ORIGINS: http://localhost:5173,http://localhost:8443
+      SITE_URL: http://localhost:5173
+      DASHBOARD_URL: http://localhost:8443
+    ports: ["8000:7860"]
+    restart: unless-stopped
+
+  website:
+    build:
+      context: ./website
+      args:
+        VITE_API_URL: http://localhost:8000
+        VITE_DASHBOARD_URL: http://localhost:8443
+    ports: ["5173:80"]
+    depends_on: [api]
+
+  dashboard:
+    build:
+      context: ./dashboard
+      args:
+        VITE_API_URL: http://localhost:8000
+        VITE_SITE_URL: http://localhost:5173
+    ports: ["8443:80"]
+    depends_on: [api]
