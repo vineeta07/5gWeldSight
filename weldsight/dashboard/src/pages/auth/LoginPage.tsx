@@ -4,6 +4,8 @@ import { Download } from "lucide-react";
 import { useAuth } from "../../hooks/useAuth";
 import AuthLayout from "./AuthLayout";
 
+import logoUrl from "../../logo.png";
+
 export default function LoginPage() {
   const { signIn, signInWithGoogle, enterDemo } = useAuth();
   const nav = useNavigate();
@@ -62,6 +64,7 @@ export default function LoginPage() {
       <div className="animate-fade-in">
         <div className="mb-8 flex items-start justify-between">
           <div>
+            <img src={logoUrl} alt="WeldSight Logo" className="w-12 h-12 mb-3 lg:hidden object-contain" />
             <div className="font-mono text-xs text-blue-700 mb-2 font-bold">WeldSight</div>
             <h1 className="font-bold text-3xl text-slate-900 tracking-tight mb-2" style={{ fontFamily: "Inter, system-ui, sans-serif" }}>Sign in</h1>
             <p className="text-slate-500 text-sm">Use your inspector account to open the dashboard.</p>
