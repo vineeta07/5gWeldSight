@@ -25,16 +25,21 @@ export default defineConfig(({ mode }) => {
           name: 'WeldSight Dashboard',
           short_name: 'WeldSight',
           theme_color: '#ffffff',
+          background_color: '#ffffff',
+          display: 'standalone',
+          start_url: '/',
           icons: [
             {
               src: '/logo.png',
               sizes: '192x192',
-              type: 'image/png'
+              type: 'image/png',
+              purpose: 'any maskable'
             },
             {
               src: '/logo.png',
               sizes: '512x512',
-              type: 'image/png'
+              type: 'image/png',
+              purpose: 'any maskable'
             }
           ]
         }
