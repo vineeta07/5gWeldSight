@@ -96,16 +96,6 @@ export default function Layout() {
     nav("/login");
   };
 
-  const handleInstallClick = async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === "accepted") setDeferredPrompt(null);
-    } else {
-      alert("To install this app:\n\n1. Tap your browser's menu (⋮)\n2. Select 'Install App' or 'Add to Home screen'");
-    }
-  };
-
   return (
     <div className="flex h-screen overflow-hidden bg-slate-50">
       <aside className="flex flex-col border-r border-slate-200 bg-white transition-all duration-200 flex-shrink-0" style={{ width: collapsed ? 80 : 240 }}>
@@ -175,13 +165,6 @@ export default function Layout() {
         <header className="flex items-center justify-between px-5 h-14 border-b border-slate-200 bg-white flex-shrink-0">
           <ConnectionStatus />
           <div className="flex items-center gap-4">
-            <button
-              onClick={handleInstallClick}
-              className="inline-flex sm:hidden items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold bg-emerald-600 text-white shadow-sm hover:bg-emerald-700 active:scale-95 transition-all"
-            >
-              <Download size={14} />
-              Install App
-            </button>
             <Clock />
           </div>
         </header>

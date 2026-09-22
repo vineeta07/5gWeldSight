@@ -28,16 +28,6 @@ export default function LoginPage() {
     return () => window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
   }, []);
 
-  const handleInstallClick = async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === "accepted") setDeferredPrompt(null);
-    } else {
-      alert("To install this app:\n\n1. Tap your browser's menu (⋮) or Share icon\n2. Select 'Install App' or 'Add to Home screen'");
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -65,20 +55,11 @@ export default function LoginPage() {
   return (
     <AuthLayout>
       <div className="animate-fade-in">
-        <div className="mb-8 flex items-start justify-between">
-          <div>
-            <img src={logoUrl} alt="WeldSight Logo" className="w-12 h-12 mb-3 lg:hidden object-contain" />
-            <div className="font-mono text-xs text-blue-700 mb-2 font-bold">WeldSight</div>
-            <h1 className="font-bold text-3xl text-slate-900 tracking-tight mb-2" style={{ fontFamily: "Inter, system-ui, sans-serif" }}>Sign in</h1>
-            <p className="text-slate-500 text-sm">Use your inspector account to open the dashboard.</p>
-          </div>
-          <button
-            onClick={handleInstallClick}
-            className="inline-flex sm:hidden items-center gap-2 px-4 py-2 rounded-full text-sm font-bold bg-emerald-500 text-white shadow-lg shadow-emerald-500/25 hover:bg-emerald-600 active:scale-95 transition-all"
-          >
-            <Download size={16} />
-            Install App
-          </button>
+        <div className="mb-8">
+          <img src={logoUrl} alt="WeldSight Logo" className="w-12 h-12 mb-3 lg:hidden object-contain" />
+          <div className="font-mono text-xs text-blue-700 mb-2 font-bold">WeldSight</div>
+          <h1 className="font-bold text-3xl text-slate-900 tracking-tight mb-2" style={{ fontFamily: "Inter, system-ui, sans-serif" }}>Sign in</h1>
+          <p className="text-slate-500 text-sm">Use your inspector account to open the dashboard.</p>
         </div>
 
         {error && (
