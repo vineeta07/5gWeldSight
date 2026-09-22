@@ -246,10 +246,13 @@ export default function VideoAnalysis() {
               <>
                 <div className="flex items-center justify-between">
                   <span className={`font-medium ${STATUS_STYLE[photo.status]}`}>{STATUS_TEXT[photo.status]}</span>
-                  <span className="text-2xl font-semibold text-slate-900">
-                    {photo.score}
-                    <span className="text-sm font-normal text-slate-500">/100</span>
-                  </span>
+                  <div className="flex flex-col items-end">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Quality Score</span>
+                    <span className="text-2xl font-semibold text-slate-900 leading-none mt-0.5">
+                      {photo.score}
+                      <span className="text-sm font-normal text-slate-500">/100</span>
+                    </span>
+                  </div>
                 </div>
                 <p className="mt-2 text-xs text-slate-500">
                   {photo.rust.count ? `AI model: ${photo.rust.count} area(s), ${photo.rust.coverage_pct}% coverage.` : "AI model: no defects found."}{" "}
