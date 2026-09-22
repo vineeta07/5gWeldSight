@@ -1,8 +1,14 @@
 {
-  "cleanUrls": true,
   "headers": [
     {
       "source": "/sw.js",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
+        { "key": "Content-Type", "value": "application/javascript; charset=utf-8" }
+      ]
+    },
+    {
+      "source": "/registerSW.js",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
         { "key": "Content-Type", "value": "application/javascript; charset=utf-8" }
@@ -25,7 +31,7 @@
   ],
   "rewrites": [
     {
-      "source": "/((?!sw\\.js|manifest\\.json|workbox-.*\\.js|pwa-.*\\.png|favicon\\.svg).*)",
+      "source": "/((?!.*\\.).*)",
       "destination": "/index.html"
     }
   ]
