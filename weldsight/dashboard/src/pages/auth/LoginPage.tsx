@@ -29,10 +29,13 @@ export default function LoginPage() {
   }, []);
 
   const handleInstallClick = async () => {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === "accepted") setDeferredPrompt(null);
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === "accepted") setDeferredPrompt(null);
+    } else {
+      alert("To install this app:\n\n1. Tap your browser's menu (⋮) or Share icon\n2. Select 'Install App' or 'Add to Home screen'");
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -69,15 +72,13 @@ export default function LoginPage() {
             <h1 className="font-bold text-3xl text-slate-900 tracking-tight mb-2" style={{ fontFamily: "Inter, system-ui, sans-serif" }}>Sign in</h1>
             <p className="text-slate-500 text-sm">Use your inspector account to open the dashboard.</p>
           </div>
-          {deferredPrompt && (
-            <button
-              onClick={handleInstallClick}
-              className="inline-flex sm:hidden items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold bg-emerald-600 text-white shadow-sm hover:bg-emerald-700 animate-pulse mt-4"
-            >
-              <Download size={14} />
-              Install App
-            </button>
-          )}
+          <button
+            onClick={handleInstallClick}
+            className="inline-flex sm:hidden items-center gap-2 px-4 py-2 rounded-full text-sm font-bold bg-emerald-500 text-white shadow-lg shadow-emerald-500/25 hover:bg-emerald-600 active:scale-95 transition-all"
+          >
+            <Download size={16} />
+            Install App
+          </button>
         </div>
 
         {error && (
