@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import {
-  ChartColumn, ChevronLeft, ChevronRight, Clapperboard, ExternalLink, FileText, LayoutDashboard, LogOut,
+  ChartColumn, ChevronLeft, ChevronRight, Clapperboard, Download, ExternalLink, FileText, LayoutDashboard, LogOut,
   Map, MessageSquare, Settings, Shapes, ShieldCheck, TriangleAlert, Video,
 } from "lucide-react";
 import { useAuth } from "../hooks/useAuth";
@@ -61,6 +61,16 @@ export default function Layout() {
   const nav = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const [assistantOpen, setAssistantOpen] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: any) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+    return () => window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+  }, []);
 
   useEffect(() => {
     const open = () => setAssistantOpen(true);
@@ -71,6 +81,13 @@ export default function Layout() {
   const handleSignOut = async () => {
     await signOut();
     nav("/login");
+  };
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === "accepted") setDeferredPrompt(null);
   };
 
   return (
@@ -113,6 +130,16 @@ export default function Layout() {
         </nav>
 
         <div className="border-t border-slate-200 p-2 space-y-1">
+          {deferredPrompt && (
+            <button
+              onClick={handleInstallClick}
+              className={`w-full flex items-center gap-3 px-2.5 py-2 rounded-md text-sm text-emerald-700 hover:bg-emerald-50`}
+              title={collapsed ? "Install app" : undefined}
+            >
+              <Download size={17} className="flex-shrink-0" />
+              {!collapsed && "Install app"}
+            </button>
+          )}
           <button
             onClick={() => setAssistantOpen((o) => !o)}
             className={`w-full flex items-center gap-3 px-2.5 py-2 rounded-md text-sm ${assistantOpen ? "bg-emerald-600 text-white" : "text-slate-700 hover:bg-slate-100"}`}
