@@ -104,7 +104,9 @@ export default function CommandCenter() {
               <li key={i.id}>
                 <button onClick={() => nav(`/incidents?code=${i.incident_code}`)} className="w-full text-left px-4 py-3 hover:bg-slate-50">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="text-sm font-medium text-slate-800 truncate">{i.threat_type}</span>
+                    <span className="text-sm font-medium text-slate-800 truncate">
+                      {i.threat_type.replace(/Defect|AI defect detection/gi, "Rust / corrosion")}
+                    </span>
                     <RiskBadge risk={i.risk_level} />
                   </div>
                   <div className="mt-1 flex items-center gap-2 text-xs text-slate-500">

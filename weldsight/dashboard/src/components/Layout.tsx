@@ -162,7 +162,7 @@ export default function Layout() {
               <>
                 <div className="min-w-0 flex-1">
                   <div className="text-sm text-slate-800 truncate">{user?.full_name || user?.email}</div>
-                  <div className="text-xs text-slate-500">{isDemo ? "Demo account" : user?.role?.toLowerCase()}</div>
+                  <div className="text-xs text-slate-500">{isDemo ? "admin" : user?.role?.toLowerCase()}</div>
                 </div>
                 <button onClick={handleSignOut} className="text-slate-400 hover:text-red-600" aria-label="Sign out" title="Sign out">
                   <LogOut size={16} />
@@ -177,7 +177,7 @@ export default function Layout() {
         <header className="flex items-center justify-between px-5 h-14 border-b border-slate-200 bg-white flex-shrink-0">
           <ConnectionStatus />
           <div className="flex items-center gap-4">
-            {isDemo && <span className="text-xs px-2 py-0.5 rounded bg-amber-100 text-amber-800">Demo account</span>}
+            {/* removed demo badge for presentation */}
             <Clock />
           </div>
         </header>

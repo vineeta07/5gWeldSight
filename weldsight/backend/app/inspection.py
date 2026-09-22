@@ -157,7 +157,7 @@ def analyze_photo(data: bytes, source: str = "website", record: bool = True) -> 
         kind = report["defects"][0]["type"].capitalize() if report["defects"] else "AI defect detection"
         inc = store.add_incident(
             camera_id="WEB", camera_name="Website photo inspector", sector="Public", kind=kind,
-            object_type="crack" if rust["count"] else "weld_defect", confidence=rust["max_score"] or report["score"] / 100,
+            object_type="rust" if rust["count"] else "weld_defect", confidence=rust["max_score"] or report["score"] / 100,
             risk=risk, reasons=[report["summary"], report["action"], _rust_sentence(rust)], source=source,
             coverage_pct=rust["coverage_pct"], image_jpeg=encode_jpeg(annotated, 80), thumb_b64=_data_url(annotated, 480),
         )

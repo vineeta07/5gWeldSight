@@ -49,6 +49,13 @@ def update_incident(code: str, body: IncidentUpdate) -> dict:
     return row
 
 
+@router.delete("/api/incidents/{code}")
+def delete_incident(code: str) -> dict:
+    if not store.delete_incident(code):
+        raise HTTPException(404, "Report not found")
+    return {"deleted": code}
+
+
 @router.get("/api/inspections")
 def inspections(limit: int = 10) -> list[dict]:
     return store.latest_inspections(min(limit, 50))

@@ -173,6 +173,15 @@ class Store:
                     return dict(r)
         return None
 
+    def delete_incident(self, code: str) -> bool:
+        with self._lock:
+            for i, r in enumerate(self.incidents):
+                if code.lower() in (r["id"], r["incident_code"].lower()):
+                    del self.incidents[i]
+                    self._save()
+                    return True
+        return False
+
     def add_incident(self, *, camera_id: str, camera_name: str, sector: str, kind: str, object_type: str, confidence: float,
                      risk: str, reasons: list[str], source: str, coverage_pct: float | None = None,
                      image_jpeg: bytes | None = None, thumb_b64: str | None = None) -> dict:

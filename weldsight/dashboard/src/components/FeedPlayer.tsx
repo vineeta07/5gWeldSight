@@ -157,6 +157,7 @@ export default function FeedPlayer({ camera, detect = false, threshold, record =
             muted
             loop
             playsInline
+            controls
             onLoadedMetadata={measure}
             onError={() => setVideoFailed(true)}
           />
@@ -191,7 +192,7 @@ export default function FeedPlayer({ camera, detect = false, threshold, record =
                 }}
               >
                 <span className="absolute -top-5 left-0 whitespace-nowrap bg-amber-400 px-1 text-[11px] font-medium text-slate-900">
-                  Defect {Math.round(d.score * 100)}%
+                  {d.label || "Crack"} {Math.round(d.score * 100)}%
                 </span>
               </div>
             ))}

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Check, Copy } from "lucide-react";
+import { Check, Copy, Trash2 } from "lucide-react";
 import { DEMO_INCIDENTS } from "../services/demoData";
 import type { Incident, IncidentStatus, RiskLevel } from "../types";
 import { api } from "../lib/api";
@@ -11,7 +11,7 @@ import { Card, DemoNotice, PageHeader, RiskBadge, SOURCE_LABEL, STATUS_LABEL, St
 const STATUSES: IncidentStatus[] = ["NEW", "ACKNOWLEDGED", "INVESTIGATING", "RESOLVED", "FALSE_POSITIVE"];
 const RISKS: RiskLevel[] = ["CRITICAL", "HIGH", "MEDIUM", "LOW"];
 
-function Detail({ inc, live, onChange }: { inc: Incident; live: boolean; onChange: (i: Incident) => void }) {
+function Detail({ inc, live, onChange, onDelete }: { inc: Incident; live: boolean; onChange: (i: Incident) => void, onDelete: (id: string) => void }) {
   const [notes, setNotes] = useState(inc.notes ?? "");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -45,11 +45,29 @@ function Detail({ inc, live, onChange }: { inc: Incident; live: boolean; onChang
     window.setTimeout(() => setCopied(false), 1500);
   };
 
+  const remove = async () => {
+    if (!window.confirm("Delete this report?")) return;
+    if (!live) {
+      onDelete(inc.id);
+      return;
+    }
+    setSaving(true);
+    try {
+      await api(`/api/incidents/${inc.incident_code}`, { method: "DELETE" });
+      onDelete(inc.id);
+    } catch (e) {
+      setError((e as Error).message);
+      setSaving(false);
+    }
+  };
+
   return (
     <div className="p-4 text-sm">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <div className="text-base font-semibold text-slate-900">{inc.threat_type}</div>
+          <div className="text-base font-semibold text-slate-900">
+            {inc.threat_type.replace(/Defect|AI defect detection/gi, "Rust / corrosion")}
+          </div>
           <div className="font-mono text-xs text-slate-500">{inc.incident_code}</div>
         </div>
         <RiskBadge risk={inc.risk_level} />
@@ -105,6 +123,9 @@ function Detail({ inc, live, onChange }: { inc: Incident; live: boolean; onChang
         Save notes
       </button>
       {error && <p className="mt-2 text-xs text-red-600">{error}</p>}
+      <button onClick={remove} disabled={saving} className="mt-3 flex items-center gap-1.5 text-xs text-red-600 hover:text-red-700 disabled:opacity-40">
+        <Trash2 size={14} /> Delete report
+      </button>
 
       {inc.timeline && inc.timeline.length > 0 && (
         <>
@@ -221,7 +242,9 @@ export default function Incidents() {
                 {rows.map((i) => (
                   <tr key={i.id} onClick={() => select(i.incident_code)} className={`cursor-pointer hover:bg-slate-50 ${selected?.id === i.id ? "bg-emerald-50" : ""}`}>
                     <td className="px-4 py-2 font-mono text-xs text-slate-600">{i.incident_code}</td>
-                    <td className="px-4 py-2 text-slate-800">{i.threat_type}</td>
+                    <td className="px-4 py-2 text-slate-800">
+                      {i.threat_type.replace(/Defect|AI defect detection/gi, "Rust / corrosion")}
+                    </td>
                     <td className="px-4 py-2 text-slate-600 truncate max-w-[10rem]">{i.camera_name || i.camera_id}</td>
                     <td className="px-4 py-2">
                       <RiskBadge risk={i.risk_level} />
@@ -245,7 +268,19 @@ export default function Incidents() {
         </Card>
 
         <Card className="xl:col-span-2" title={selected ? "Report details" : undefined}>
-          {selected ? <Detail inc={selected} live={incidents.live} onChange={replace} /> : <p className="p-4 text-sm text-slate-500">Select a report to see details and update its status.</p>}
+          {selected ? (
+            <Detail
+              inc={selected}
+              live={incidents.live}
+              onChange={(u) => incidents.setData((prev) => prev.map((x) => (x.id === u.id ? u : x)))}
+              onDelete={(id) => {
+                incidents.setData((prev) => prev.filter((x) => x.id !== id));
+                setParams({});
+              }}
+            />
+          ) : (
+            <p className="p-4 text-sm text-slate-500">Select a report to see details and update its status.</p>
+          )}
         </Card>
       </div>
     </div>
