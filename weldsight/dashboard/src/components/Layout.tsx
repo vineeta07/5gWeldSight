@@ -73,8 +73,12 @@ export default function Layout() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
 
   useEffect(() => {
+    // @ts-ignore
+    if (window._deferredPrompt) {
+      // @ts-ignore
+      setDeferredPrompt(window._deferredPrompt);
+    }
     const handleBeforeInstallPrompt = (e: any) => {
-      e.preventDefault();
       setDeferredPrompt(e);
     };
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
