@@ -4,7 +4,7 @@ import { Download } from "lucide-react";
 import { useAuth } from "../../hooks/useAuth";
 import AuthLayout from "./AuthLayout";
 
-import logoUrl from "../../logo.png";
+import { logoUrl } from "../../logoBase64";
 
 export default function LoginPage() {
   const { signIn, signInWithGoogle, enterDemo } = useAuth();
