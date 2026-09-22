@@ -40,8 +40,8 @@ function ConnectionStatus() {
       ? `Model: ${health.model.name} (${health.model.loaded ? "loaded" : "loading"}) · Assistant: ${health.gemini.configured ? "Gemini" : "offline mode"}`
       : "The dashboard is using demo data until the backend is reachable.";
   return (
-    <span className="inline-flex items-center gap-1.5 text-xs text-slate-600" title={title}>
-      <span className={`w-2 h-2 rounded-full ${dot}`} />
+    <span className="inline-flex flex-shrink-0 whitespace-nowrap items-center gap-1.5 text-xs text-slate-600" title={title}>
+      <span className={`w-2 h-2 rounded-full flex-shrink-0 ${dot}`} />
       {label}
     </span>
   );
@@ -53,7 +53,7 @@ function Clock() {
     const t = window.setInterval(() => setNow(new Date()), 30000);
     return () => window.clearInterval(t);
   }, []);
-  return <span className="text-sm font-bold text-slate-700">{now.toLocaleString([], { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}</span>;
+  return <span className="hidden sm:block text-sm font-bold text-slate-700">{now.toLocaleString([], { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}</span>;
 }
 
 export default function Layout() {
@@ -148,27 +148,20 @@ export default function Layout() {
             <MessageSquare size={17} className="flex-shrink-0" />
             {!collapsed && "AI assistant"}
           </button>
-          {SITE_URL && (
-            <a href={SITE_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-2.5 py-2 rounded-md text-sm text-slate-600 hover:bg-slate-100" title={collapsed ? "Project website" : undefined}>
-              <ExternalLink size={17} className="flex-shrink-0" />
-              {!collapsed && "Project website"}
-            </a>
-          )}
+
           <div className="flex items-center gap-2 px-2.5 pt-2">
             <div className="w-7 h-7 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center text-xs font-medium flex-shrink-0">
               {(user?.full_name?.[0] || user?.email?.[0] || "U").toUpperCase()}
             </div>
             {!collapsed && (
-              <>
-                <div className="min-w-0 flex-1">
-                  <div className="text-sm text-slate-800 truncate">{user?.full_name || user?.email}</div>
-                  <div className="text-xs text-slate-500">{isDemo ? "admin" : user?.role?.toLowerCase()}</div>
-                </div>
-                <button onClick={handleSignOut} className="text-slate-400 hover:text-red-600" aria-label="Sign out" title="Sign out">
-                  <LogOut size={16} />
-                </button>
-              </>
+              <div className="min-w-0 flex-1">
+                <div className="text-sm text-slate-800 truncate">{user?.full_name || user?.email}</div>
+                <div className="text-xs text-slate-500">{isDemo ? "admin" : user?.role?.toLowerCase()}</div>
+              </div>
             )}
+            <button onClick={handleSignOut} className="text-slate-400 hover:text-red-600 ml-auto" aria-label="Sign out" title="Sign out">
+              <LogOut size={16} />
+            </button>
           </div>
         </div>
       </aside>
