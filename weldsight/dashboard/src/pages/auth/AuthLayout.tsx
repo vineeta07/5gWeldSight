@@ -53,12 +53,10 @@ export default function AuthLayout({ children }: Props) {
         {/* Content — branding */}
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 border-2 border-blue-400/60 rounded flex items-center justify-center bg-blue-500/10">
-              <span className="text-blue-300 text-sm font-mono font-bold">WS</span>
-            </div>
+            <img src="/logo.png" alt="WeldSight" className="w-24 h-24 md:w-32 md:h-32 object-contain shrink-0" />
             <div>
-              <div className="text-blue-300 font-bold text-xl tracking-[0.3em]" style={{ fontFamily: "Inter, system-ui, sans-serif" }}>WeldSight</div>
-              <div className="text-blue-200/40 font-mono text-[10px]">Weld inspection dashboard</div>
+              <div className="text-blue-300 font-bold text-xl tracking-[0.3em] mt-1" style={{ fontFamily: "Inter, system-ui, sans-serif" }}>WeldSight</div>
+              <div className="text-blue-200/40 font-mono text-[10px]">Industry inspection</div>
             </div>
           </div>
         </div>
@@ -66,7 +64,7 @@ export default function AuthLayout({ children }: Props) {
         <div className="relative z-10 space-y-6">
           <div>
             <p className="text-blue-100/70 text-sm leading-relaxed max-w-sm" style={{ fontFamily: "Inter, sans-serif" }}>
-              Watch weld cameras, review defect reports, and check photos and videos for rust.</p>
+              Watch weld cameras, review defect reports, and check photos and videos for defects.</p>
           </div>
 
           <div className="space-y-2.5">

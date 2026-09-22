@@ -162,7 +162,7 @@ export default function FeedPlayer({ camera, detect = false, threshold, record =
           />
         )}
 
-        {/* Rust outlines from the model */}
+        {/* Defect outlines from the model */}
         {box && result && result.count > 0 && !streamMode && (
           <div className="absolute pointer-events-none" style={box}>
             <svg viewBox="0 0 1 1" preserveAspectRatio="none" className="absolute inset-0 w-full h-full">
@@ -191,7 +191,7 @@ export default function FeedPlayer({ camera, detect = false, threshold, record =
                 }}
               >
                 <span className="absolute -top-5 left-0 whitespace-nowrap bg-amber-400 px-1 text-[11px] font-medium text-slate-900">
-                  Rust {Math.round(d.score * 100)}%
+                  Defect {Math.round(d.score * 100)}%
                 </span>
               </div>
             ))}
@@ -208,14 +208,14 @@ export default function FeedPlayer({ camera, detect = false, threshold, record =
       {!compact && detect && !offline && (
         <p className="mt-2 text-xs text-slate-500">
           {error
-            ? `Rust detection paused: ${error}`
+            ? `Defect detection paused: ${error}`
             : streamMode
-              ? "Rust detection runs on the server for this stream."
+              ? "Defect detection runs on the server for this stream."
               : !result
-                ? "Rust detection on. Waiting for the first result…"
+                ? "Defect detection on. Waiting for the first result…"
                 : result.count
-                  ? `Rust found: ${result.count} ${result.count === 1 ? "area" : "areas"}, ${result.coverage_pct}% of the frame (highest confidence ${Math.round(result.max_score * 100)}%). Checked in ${Math.round(result.inference_ms)} ms.`
-                  : `No rust in the latest frame. Checked in ${Math.round(result.inference_ms)} ms.`}
+                  ? `Defect(s) found: ${result.count} ${result.count === 1 ? "area" : "areas"}, ${result.coverage_pct}% of the frame (highest confidence ${Math.round(result.max_score * 100)}%). Checked in ${Math.round(result.inference_ms)} ms.`
+                  : `No defects in the latest frame. Checked in ${Math.round(result.inference_ms)} ms.`}
           {result?.report_code && ` Report ${result.report_code} was filed.`}
         </p>
       )}

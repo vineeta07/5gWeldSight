@@ -7,6 +7,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from . import config
 from .model import segmenter
+from contextlib import asynccontextmanager
+# Trigger reload 2
 from .routers import chat, dashboard, health, vision
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")

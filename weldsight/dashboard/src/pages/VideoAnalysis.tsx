@@ -146,7 +146,7 @@ export default function VideoAnalysis() {
 
   return (
     <div className="p-5 max-w-7xl">
-      <PageHeader title="Video analysis" description="Upload a recorded weld video or a photo. The rust model checks it and the result is saved as a defect report." />
+      <PageHeader title="Video analysis" description="Upload a recorded weld video or a photo. The defect model checks it and the result is saved as a defect report." />
 
       <div className="mb-4 inline-flex rounded-md border border-slate-300 bg-white p-0.5">
         {(["video", "photo"] as const).map((m) => (
@@ -208,7 +208,7 @@ export default function VideoAnalysis() {
                 <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-3">
                   {[
                     ["Frames checked", video.frames_checked],
-                    ["Frames with rust", video.frames_with_rust],
+                    ["Frames with defects", video.frames_with_rust],
                     ["Peak coverage", `${video.peak_coverage_pct}%`],
                     ["Peak at", `${video.peak_time_s}s`],
                   ].map(([k, v]) => (
@@ -225,7 +225,7 @@ export default function VideoAnalysis() {
                       <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
                       <XAxis dataKey="t" tickFormatter={(t) => `${t}s`} fontSize={11} />
                       <YAxis fontSize={11} unit="%" width={36} />
-                      <Tooltip formatter={(v) => [`${v}%`, "Rust coverage"]} labelFormatter={(t) => `At ${t}s (click to jump)`} />
+                      <Tooltip formatter={(v) => [`${v}%`, "Defect coverage"]} labelFormatter={(t) => `At ${t}s (click to jump)`} />
                       <Bar dataKey="coverage_pct" fill="#ef4444" radius={[2, 2, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
@@ -252,7 +252,7 @@ export default function VideoAnalysis() {
                   </span>
                 </div>
                 <p className="mt-2 text-xs text-slate-500">
-                  {photo.rust.count ? `Rust model: ${photo.rust.count} area(s), ${photo.rust.coverage_pct}% coverage.` : "Rust model: no rust found."}{" "}
+                  {photo.rust.count ? `AI model: ${photo.rust.count} area(s), ${photo.rust.coverage_pct}% coverage.` : "AI model: no defects found."}{" "}
                   {photo.engine === "model+gemini" ? "Other defects reviewed by Gemini." : "Gemini review unavailable."}
                 </p>
                 <ul className="mt-3 space-y-1">
@@ -284,13 +284,13 @@ export default function VideoAnalysis() {
       </div>
 
       {video && video.keyframes.length > 0 && (
-        <Card className="mt-4" title={video.frames_with_rust ? "Frames with the most rust" : "Sample frames"}>
+        <Card className="mt-4" title={video.frames_with_rust ? "Frames with the most defects" : "Sample frames"}>
           <div className="p-4 grid grid-cols-2 lg:grid-cols-4 gap-3">
             {video.keyframes.map((k) => (
               <button key={k.t} onClick={() => seek(k.t)} className="text-left">
                 <img src={k.image} alt={`Frame at ${k.t} seconds`} className="w-full rounded-md" />
                 <div className="mt-1 text-xs text-slate-500">
-                  {k.t}s · {k.count ? `${k.coverage_pct}% rust` : "no rust"}
+                  {k.t}s · {k.count ? `${k.coverage_pct}% defect` : "no defects"}
                 </div>
               </button>
             ))}
@@ -313,7 +313,7 @@ export default function VideoAnalysis() {
               <input
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
-                placeholder={mode === "video" ? "e.g. When does the rust first appear?" : "e.g. What caused this?"}
+                placeholder={mode === "video" ? "e.g. When does the defect first appear?" : "e.g. What caused this?"}
                 className="flex-1 rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
               <button type="submit" disabled={asking || !question.trim()} className="rounded-md bg-emerald-600 px-3 text-white disabled:opacity-40" aria-label="Send">

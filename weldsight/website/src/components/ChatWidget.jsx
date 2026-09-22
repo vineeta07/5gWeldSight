@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import ReactMarkdown from "react-markdown";
 import { OPEN_CHAT_EVENT, getLastInspection } from "../utils/chat";
 import { apiUrl } from "../utils/api";
 
@@ -7,7 +8,7 @@ import { apiUrl } from "../utils/api";
 
 const STARTERS = [
   "How does WeldSight detect weld defects?",
-  "Why does weld inspection need 5G?",
+  "Why does industry inspection need 5G?",
   "What's inside the prototype?",
 ];
 
@@ -96,7 +97,7 @@ const ChatWidget = () => {
                      bg-zinc border border-blue/20 shadow-2xl font-inter"
         >
           <header className="px-5 py-4 border-b border-white/10">
-            <p className="font-outfit font-semibold text-white">Ask about WeldSight</p>
+            <p className="font-outfit font-semibold text-white">AI assistant</p>
           </header>
 
           <div ref={listRef} className="flex-1 overflow-y-auto px-4 py-4 space-y-3" aria-live="polite">
@@ -118,20 +119,20 @@ const ChatWidget = () => {
 
             {messages.map((m, i) => (
               <div key={i} className={m.role === "user" ? "flex justify-end" : "flex justify-start"}>
-                <p
-                  className={`max-w-[85%] whitespace-pre-wrap text-sm leading-relaxed px-3.5 py-2.5 rounded-2xl ${
+                <div
+                  className={`max-w-[85%] text-sm leading-relaxed px-3.5 py-2.5 rounded-2xl [&_strong]:font-bold [&_ul]:list-disc [&_ul]:ml-4 [&_p]:my-1 ${
                     m.role === "user"
                       ? "bg-blue text-white rounded-br-sm"
                       : "bg-white/[0.06] text-white rounded-bl-sm"
                   }`}
                 >
-                  {m.content}
+                  <ReactMarkdown>{m.content}</ReactMarkdown>
                   {m.sources?.length ? (
                     <span className="block mt-2 pt-2 border-t border-white/10 text-[11px] text-gray">
                       From the WeldSight notes: {m.sources.map((s) => s.title).join(" · ")}
                     </span>
                   ) : null}
-                </p>
+                </div>
               </div>
             ))}
 

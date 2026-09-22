@@ -11,7 +11,6 @@ export const navLinks = [
   { id: "product", label: "3D view" },
   { id: "story", label: "Story" },
   { id: "how", label: "How it works" },
-  { id: "inspector", label: "Try the AI" },
   { id: "exhibition", label: "Exhibition" },
 ];
 

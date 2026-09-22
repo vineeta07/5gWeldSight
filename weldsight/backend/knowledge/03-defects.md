@@ -5,7 +5,7 @@ This is general welding guidance for visual inspection. Always follow the weldin
 # Porosity
 
 Gas pores or holes trapped in the weld metal, seen as small round cavities, alone or in clusters.
-- Common causes: poor shielding gas coverage (flow too low or too high, draughts, blocked nozzle), contaminated base metal (oil, paint, rust, moisture), damp electrodes or wire, too long an arc.
+- Common causes: poor shielding gas coverage (flow too low or too high, draughts, blocked nozzle), contaminated base metal (oil, paint, dirt, moisture), damp electrodes or wire, too long an arc.
 - Fixes: check gas flow and nozzle, shield the area from wind, clean the joint back to bright metal, use dry consumables, keep a consistent arc length. Grind out and re-weld porous sections that exceed the acceptance limit.
 
 # Cracks
@@ -51,11 +51,11 @@ Weld metal that flows onto the surface of the base metal without fusing to it.
 - Common causes: travel too slow, current too low, wrong angle.
 - Fixes: increase travel speed or current within the procedure, correct the angle, grind off the overlap.
 
-# Rust and corrosion
+# General defects and anomalies
 
-Rust (iron oxide) forms on steel exposed to moisture and oxygen. Near welds it matters for two reasons: rust on the joint before welding causes porosity and lack of fusion, and corrosion on finished welds and nearby metal weakens the structure over time.
+General defects or anomalies may form on steel exposed to moisture, oxygen, or mechanical wear. Near welds it matters for two reasons: contaminants on the joint before welding causes porosity and lack of fusion, and anomalies on finished welds and nearby metal weakens the structure over time.
 - Before welding: clean the joint back to bright metal.
-- On finished welds: measure the extent, remove loose rust, and assess whether the remaining wall thickness is still acceptable. Heavy or spreading corrosion, especially on pressure equipment and pipelines, should be reported and assessed by a qualified inspector.
+- On finished welds: measure the extent, remove loose contaminants, and assess whether the remaining wall thickness is still acceptable. Heavy or spreading defects, especially on pressure equipment and pipelines, should be reported and assessed by a qualified inspector.
 
 # Acceptance standards
 

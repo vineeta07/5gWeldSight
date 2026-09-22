@@ -3,9 +3,9 @@
 The dashboard is the inspector's workspace. The main pages:
 
 - **Overview**: counts of cameras online, open defect reports and critical findings, the main camera feed and the latest reports.
-- **Live feeds**: all cameras in a grid or one at a time. Turn on "Rust detection" to send frames from the selected feed to the model every few seconds; findings are drawn on the video.
+- **Live feeds**: all cameras in a grid or one at a time. Turn on "Defect detection" to send frames from the selected feed to the model every few seconds; findings are drawn on the video.
 - **Facility map**: where the cameras are in the facility and which ones have open findings.
-- **Video analysis**: upload a recorded weld video. The backend samples frames across the video, runs the rust model on each, and shows a timeline, the frames with the most rust and a written summary. You can then ask the assistant questions about that video.
+- **Video analysis**: upload a recorded weld video. The backend samples frames across the video, runs the defect model on each, and shows a timeline, the frames with the most defects and a written summary. You can then ask the assistant questions about that video.
 - **Defect reports**: every finding, whether from a camera, a video upload or the website photo inspector. Each report has a status: New, Acknowledged, Investigating, Resolved or False positive. Inspectors can add notes.
 - **Analytics**: charts of findings over time, by camera and by risk level.
 - **Inspection records**: saved evidence for each report, with a SHA-256 fingerprint so anyone can check a record has not been changed. Anchoring records to a blockchain ledger is optional and needs the separate chain gateway service.

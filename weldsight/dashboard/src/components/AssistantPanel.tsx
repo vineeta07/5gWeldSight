@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useLocation } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 import { Send, X } from "lucide-react";
 import { api } from "../lib/api";
 import { getAssistantContext } from "../lib/assistant";
@@ -33,7 +34,7 @@ export const PAGE_TITLES: Record<string, string> = {
   "/settings": "Settings",
 };
 
-const STARTERS = ["Which reports are still open?", "What should I check first today?", "How does the rust model decide the risk level?"];
+const STARTERS = ["Which reports are still open?", "What should I check first today?", "How does the defect model decide the risk level?"];
 
 export default function AssistantPanel({ onClose }: { onClose: () => void }) {
   const { pathname } = useLocation();
@@ -84,8 +85,8 @@ export default function AssistantPanel({ onClose }: { onClose: () => void }) {
     <aside className="w-full sm:w-96 flex flex-col border-l border-slate-200 bg-white shadow-xl animate-slide-in" aria-label="Assistant">
       <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200">
         <div>
-          <h2 className="text-sm font-semibold text-slate-900">Assistant</h2>
-          <p className="text-xs text-slate-500">Knows the WeldSight notes and this dashboard's data</p>
+          <h2 className="text-sm font-semibold text-slate-900">AI assistant</h2>
+
         </div>
         <button onClick={onClose} className="p-1 text-slate-400 hover:text-slate-700" aria-label="Close assistant">
           <X size={16} />
@@ -106,11 +107,11 @@ export default function AssistantPanel({ onClose }: { onClose: () => void }) {
         {messages.map((m, i) => (
           <div key={i} className={m.role === "user" ? "flex justify-end" : "flex justify-start"}>
             <div
-              className={`max-w-[88%] rounded-lg px-3 py-2 text-sm leading-relaxed whitespace-pre-wrap ${
+              className={`max-w-[88%] rounded-lg px-3 py-2 text-sm leading-relaxed [&_strong]:font-bold [&_ul]:list-disc [&_ul]:ml-4 [&_p]:my-1 ${
                 m.role === "user" ? "bg-slate-900 text-white" : "bg-slate-100 text-slate-800"
               }`}
             >
-              {m.content}
+              <ReactMarkdown>{m.content}</ReactMarkdown>
               {m.sources && m.sources.length > 0 && (
                 <div className="mt-2 pt-2 border-t border-slate-200 text-xs text-slate-500">From the notes: {m.sources.map((s) => s.title).join(" · ")}</div>
               )}

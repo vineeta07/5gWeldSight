@@ -29,7 +29,7 @@ log = logging.getLogger("weldsight.agent")
 CORE_FACTS = """\
 - WeldSight is a 5G-connected weld inspection system built by students at Delhi Technological University (DTU), New Delhi.
 - A portable camera unit (Raspberry Pi, 5G modem with four antennas, pan-tilt camera, 3D-printed chassis, battery base) streams weld video over 5G.
-- A vision model (rust_seg_unity.onnx, RF-DETR-style segmentation) finds rust/corrosion and outlines it; it does not detect other weld defects by itself.
+- A vision model (rust_seg_unity.onnx, RF-DETR-style segmentation) finds defects/anomalies and outlines them; Gemini assists with reviewing other defect types.
 - Inspectors review results in the web dashboard or in VR (Unity). The public website has a photo inspector and links to the dashboard.
 - Both apps share one backend, so website inspections appear in the dashboard's defect reports."""
 

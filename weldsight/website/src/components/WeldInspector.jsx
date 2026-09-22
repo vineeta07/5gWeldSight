@@ -126,7 +126,7 @@ const WeldInspector = () => {
                 onChange={(e) => pick(e.target.files?.[0])}
               />
               {preview ? (
-                <img src={result?.annotated_image || preview} alt={result?.annotated_image ? "Weld photo with rust areas outlined" : "Weld photo to analyse"} className="absolute inset-0 w-full h-full object-contain bg-black/40" />
+                <img src={result?.annotated_image || preview} alt={result?.annotated_image ? "Weld photo with defects outlined" : "Weld photo to analyse"} className="absolute inset-0 w-full h-full object-contain bg-black/40" />
               ) : (
                 <div className="text-center px-6">
                   <svg className="mx-auto mb-3 text-blue" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
@@ -198,9 +198,9 @@ const WeldInspector = () => {
                 <div className="mt-6">
                   <p className="text-sm text-gray mb-4">
                     {result.rust?.count
-                      ? `Rust model: ${result.rust.count} ${result.rust.count === 1 ? "area" : "areas"} outlined on the photo, covering ${result.rust.coverage_pct}% (highest confidence ${Math.round(result.rust.max_score * 100)}%).`
-                      : "Rust model: no rust or corrosion found."}{" "}
-                    {result.engine === "model+gemini" ? "Other defects were checked by Gemini." : "Gemini review unavailable, so only rust was checked."}
+                      ? `AI model: ${result.rust.count} ${result.rust.count === 1 ? "area" : "areas"} outlined on the photo, covering ${result.rust.coverage_pct}% (highest confidence ${Math.round(result.rust.max_score * 100)}%).`
+                      : "AI model: no defects or anomalies found."}{" "}
+                    {result.engine === "model+gemini" ? "Other defects were checked by Gemini." : "Gemini review unavailable, so only the primary model was used."}
                   </p>
                   <h3 className="text-white font-semibold mb-2">Defects found</h3>
                   {result.defects?.length ? (
@@ -245,7 +245,7 @@ const WeldInspector = () => {
         </div>
 
         <p className="mt-6 text-xs text-gray max-w-2xl">
-          Photos are checked by WeldSight&apos;s rust segmentation model and reviewed by Google Gemini. Results are a screening aid, not a certified inspection.
+          Photos are checked by WeldSight&apos;s AI defect detection model and reviewed by Google Gemini. Results are a screening aid, not a certified inspection.
         </p>
       </div>
     </section>

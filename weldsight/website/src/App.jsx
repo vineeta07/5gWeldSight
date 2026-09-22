@@ -6,7 +6,6 @@ import Highlights from "./components/Highlights";
 import ModelSection from "./components/ModelSection";
 import Features from "./components/Features";
 import HowItWorks from "./components/HowItWorks";
-import WeldInspector from "./components/WeldInspector";
 import Exhibition from "./components/Exhibition";
 import Footer from "./components/Footer";
 import ChatWidget from "./components/ChatWidget";
@@ -32,7 +31,6 @@ const App = () => {
         <ModelSection />
         <Features />
         <HowItWorks />
-        <WeldInspector />
         <Exhibition />
       </main>
       <Footer />

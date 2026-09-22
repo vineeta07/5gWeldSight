@@ -54,11 +54,11 @@ export const DEMO_INCIDENTS: Incident[] = [
   {
     id: "inc3", incident_code: "DEF-2026-0001", camera_id: "CAM-02", camera_name: "Seam scanner", sector: "Bay-B",
     timestamp: ts(45), object_type: "porosity", tracking_id: "D-019", confidence: 79,
-    threat_type: "Porosity", risk_score: 48, risk_level: "MEDIUM", status: "RESOLVED",
-    operator: "INS-Singh", notes: "Porosity within acceptable limits after re-inspection. Shielding gas flow adjusted.",
-    ai_reasons: ["Multiple gas pores in weld bead", "Pore density above threshold"],
+    threat_type: "Surface defect", risk_score: 62, risk_level: "LOW", status: "RESOLVED",
+    operator: "INS-Sharma", notes: "Minor surface defect, cleaned and smoothed.",
+    ai_reasons: ["Defect detected on surface", "Area coverage 1.4%"],
     timeline: [
-      { time: ts(50), event: "Porosity pattern detected", status: "done" },
+      { time: ts(120), event: "Surface defect detected by crawler", status: "done" },
       { time: ts(48), event: "Defect pattern flagged", status: "done" },
       { time: ts(45), event: "Alert generated", status: "done" },
       { time: ts(40), event: "Inspector reviewed and adjusted gas flow", status: "done" },
@@ -117,7 +117,7 @@ export const DEMO_IDENTITIES = [
 ];
 
 export function generateDemoDetections(cameraId: string) {
-  const objects = ["rust", "crack", "porosity"] as const;
+  const objects = ["defect", "crack", "porosity"] as const;
   const zones = ["SAFE", "WARNING", "RESTRICTED"];
   const risks = ["LOW", "MEDIUM", "HIGH", "CRITICAL"] as const;
   const count = Math.floor(Math.random() * 3) + 1;

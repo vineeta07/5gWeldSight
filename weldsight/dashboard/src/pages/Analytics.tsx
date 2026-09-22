@@ -49,8 +49,8 @@ export default function Analytics() {
         {[
           { label: "Findings today", value: "67", color: "#22d3ee" },
           { label: "Critical findings", value: "7", color: "#ef4444" },
-          { label: "Rust findings", value: "45", color: "#06b6d4" },
-          { label: "Other defects", value: "22", color: "#a78bfa" },
+          { label: "Defect findings", value: "45", color: "#06b6d4" },
+          { label: "Anomalies", value: "22", color: "#a78bfa" },
         ].map(({ label, value, color }) => (
           <div key={label} className="glass-panel p-4">
             <div className="font-mono text-[10px] mb-1 text-slate-500 font-medium">{label}</div>
@@ -80,7 +80,7 @@ export default function Analytics() {
               <YAxis tick={{ fill: "#475569", fontSize: 10, fontFamily: "JetBrains Mono" }} />
               <Tooltip contentStyle={TOOLTIP_STYLE} />
               <Area type="monotone" dataKey="threats" stroke="#ef4444" fill="url(#threatGrad)" strokeWidth={1.5} name="Findings" />
-              <Area type="monotone" dataKey="persons" stroke="#22d3ee" fill="url(#personGrad)" strokeWidth={1} name="Rust" />
+              <Area type="monotone" dataKey="persons" stroke="#22d3ee" fill="url(#personGrad)" strokeWidth={1} name="Defects" />
             </AreaChart>
           </ResponsiveContainer>
         </div>

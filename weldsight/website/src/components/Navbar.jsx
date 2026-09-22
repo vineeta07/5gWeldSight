@@ -63,11 +63,11 @@ const Navbar = () => {
     >
       <nav className="screen-max-width page-gutter h-full flex items-center justify-between gap-6">
         <a href="#hero" className="flex items-center gap-2 shrink-0" aria-label="WeldSight home">
-          <img src="/logo.png" alt="WeldSight" className="w-6 h-6 object-contain" />
-          <span className="font-semibold text-white">WeldSight</span>
+          <img src="/logo.png" alt="WeldSight" className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 object-contain" />
+          <span className="font-bold text-lg sm:text-xl md:text-2xl tracking-wide text-white md:-ml-2">WeldSight</span>
         </a>
 
-        <div className="hidden lg:flex items-center gap-7 text-xs">
+        <div className="hidden lg:flex items-center gap-8 text-sm font-medium">
           {navLinks.map(({ id, label }) => (
             <a
               key={id}
@@ -83,18 +83,18 @@ const Navbar = () => {
         <div className="flex items-center gap-2">
           <button
             onClick={openChat}
-            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue text-white text-xs font-medium hover:bg-blue/80 transition-colors"
+            className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-blue text-white text-sm font-medium hover:bg-blue/80 transition-colors"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z" />
             </svg>
-            Ask AI
+            Chat
           </button>
           <a
             href={DASHBOARD_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-blue text-blue text-xs font-medium hover:bg-blue hover:text-white transition-colors"
+            className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-blue text-blue text-sm font-medium hover:bg-blue hover:text-white transition-colors"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13 12H3" />

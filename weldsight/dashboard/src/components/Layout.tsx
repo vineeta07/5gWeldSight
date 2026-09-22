@@ -52,7 +52,7 @@ function Clock() {
     const t = window.setInterval(() => setNow(new Date()), 30000);
     return () => window.clearInterval(t);
   }, []);
-  return <span className="text-xs text-slate-500">{now.toLocaleString([], { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}</span>;
+  return <span className="text-sm font-bold text-slate-700">{now.toLocaleString([], { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}</span>;
 }
 
 export default function Layout() {
@@ -74,18 +74,22 @@ export default function Layout() {
 
   return (
     <div className="flex h-screen overflow-hidden bg-slate-50">
-      <aside className="flex flex-col border-r border-slate-200 bg-white transition-all duration-200 flex-shrink-0" style={{ width: collapsed ? 60 : 224 }}>
-        <div className="flex items-center gap-2 px-3 h-14 border-b border-slate-200">
-          <img src="/logo.png" alt="WeldSight" className="w-8 h-8 object-contain flex-shrink-0" />
+      <aside className="flex flex-col border-r border-slate-200 bg-white transition-all duration-200 flex-shrink-0" style={{ width: collapsed ? 80 : 280 }}>
+        <div className="flex items-center gap-3 px-4 py-4 border-b border-slate-200 min-h-[80px]">
+          <button onClick={() => collapsed && setCollapsed(false)} className="flex-shrink-0 outline-none cursor-pointer" title={collapsed ? "Expand sidebar" : ""}>
+            <img src="/logo.png" alt="WeldSight" className={`object-contain transition-all duration-200 ${collapsed ? "w-10 h-10 hover:scale-105" : "w-12 h-12 md:w-16 md:h-16"}`} />
+          </button>
           {!collapsed && (
-            <div className="min-w-0">
-              <div className="text-sm font-semibold text-slate-900 leading-tight">WeldSight</div>
-              <div className="text-xs text-slate-500 leading-tight">Inspection dashboard</div>
+            <div className="min-w-0 flex-1">
+              <div className="text-lg font-bold text-slate-900 leading-tight">WeldSight</div>
+              <div className="text-sm text-slate-500 leading-tight">Industry inspection</div>
             </div>
           )}
-          <button onClick={() => setCollapsed((c) => !c)} className="ml-auto text-slate-400 hover:text-slate-700" aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}>
-            {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
-          </button>
+          {!collapsed && (
+            <button onClick={() => setCollapsed(true)} className="ml-auto text-slate-400 hover:text-slate-700 p-1 bg-slate-100 rounded-full hover:bg-slate-200" aria-label="Collapse sidebar">
+              <ChevronLeft size={20} />
+            </button>
+          )}
         </div>
 
         <nav className="flex-1 overflow-y-auto py-2">
@@ -111,10 +115,10 @@ export default function Layout() {
           <button
             onClick={() => setAssistantOpen((o) => !o)}
             className={`w-full flex items-center gap-3 px-2.5 py-2 rounded-md text-sm ${assistantOpen ? "bg-emerald-600 text-white" : "text-slate-700 hover:bg-slate-100"}`}
-            title={collapsed ? "Assistant" : undefined}
+            title={collapsed ? "AI assistant" : undefined}
           >
             <MessageSquare size={17} className="flex-shrink-0" />
-            {!collapsed && "Assistant"}
+            {!collapsed && "AI assistant"}
           </button>
           {SITE_URL && (
             <a href={SITE_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-2.5 py-2 rounded-md text-sm text-slate-600 hover:bg-slate-100" title={collapsed ? "Project website" : undefined}>

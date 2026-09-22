@@ -68,7 +68,7 @@ function Detail({ inc, live, onChange }: { inc: Incident; live: boolean; onChang
         <dd className="text-slate-800">{inc.confidence}%</dd>
         {inc.coverage_pct != null && (
           <>
-            <dt className="text-slate-500">Rust coverage</dt>
+            <dt className="text-slate-500">Defect coverage</dt>
             <dd className="text-slate-800">{inc.coverage_pct}% of the image</dd>
           </>
         )}

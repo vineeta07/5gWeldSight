@@ -35,7 +35,7 @@ export default function AnalysisReports() {
         doc.text("WELDSIGHT — Analysis Report", 14, 18);
         doc.setFontSize(9);
         doc.setFont("helvetica", "normal");
-        doc.text("Intelligent Border Video Analytics Platform | Team Drishti | SIH26187", 14, 26);
+        doc.text("Industry Inspection", 14, 26);
         doc.text(`Generated: ${new Date().toLocaleString()}`, 14, 32);
 
         y = 50;
@@ -171,18 +171,18 @@ export default function AnalysisReports() {
     setTimeout(() => {
       try {
         const pptx = new PptxGenJS();
-        pptx.author = "Team Drishti";
+        pptx.author = "WeldSight";
         pptx.company = "WELDSIGHT";
-        pptx.subject = "Border Surveillance Analysis Report";
+        pptx.subject = "Industry Inspection Analysis Report";
 
         // Slide 1: Title
         const slide1 = pptx.addSlide();
         slide1.background = { color: "0F172A" };
         slide1.addText("WELDSIGHT", { x: 0.8, y: 1.0, w: 8.5, fontSize: 40, color: "10B981", bold: true, fontFace: "Arial" });
-        slide1.addText("Intelligent Border Video Analytics Platform", { x: 0.8, y: 1.8, w: 8.5, fontSize: 18, color: "94A3B8", fontFace: "Arial" });
+        slide1.addText("Industry Inspection", { x: 0.8, y: 1.8, w: 8.5, fontSize: 18, color: "94A3B8", fontFace: "Arial" });
         slide1.addText("Analysis Report", { x: 0.8, y: 2.4, w: 8.5, fontSize: 24, color: "FFFFFF", bold: true, fontFace: "Arial" });
         slide1.addText(`Generated: ${new Date().toLocaleString()}`, { x: 0.8, y: 3.2, w: 8.5, fontSize: 11, color: "64748B", fontFace: "Arial" });
-        slide1.addText("Team Drishti | SIH26187 | Smart India Hackathon 2026", { x: 0.8, y: 4.5, w: 8.5, fontSize: 11, color: "475569", fontFace: "Arial" });
+
 
         if (selectedReport === "summary") {
           // Slide 2: Stats

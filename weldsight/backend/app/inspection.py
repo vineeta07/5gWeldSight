@@ -38,9 +38,9 @@ def _data_url(img: np.ndarray, max_side: int = 640, quality: int = 72) -> str:
 
 def _rust_sentence(r: dict) -> str:
     if r["count"] == 0:
-        return "The rust model found no rust or corrosion."
+        return "The AI model found no defects or anomalies."
     areas = "area" if r["count"] == 1 else "areas"
-    return (f"The rust model found {r['count']} {areas} of rust covering {r['coverage_pct']}% of the image "
+    return (f"The AI model found {r['count']} {areas} of defects covering {r['coverage_pct']}% of the image "
             f"(highest confidence {r['max_score']:.0%}).")
 
 
@@ -59,9 +59,9 @@ REVIEW_PROMPT = """You are an experienced visual weld inspector. Look at the pho
    Don't start with "This weld" or "Based on".
 5. action: one clear instruction for the welder or inspector.
 
-An automatic rust segmentation model has already checked this photo:
+An automatic defect segmentation model has already checked this photo:
 {rust}
-Treat it as a second opinion: it can confuse other orange or brown surfaces with rust.
+Treat it as a second opinion.
 Only report what you can see. If the image quality limits the assessment, say so."""
 
 
@@ -112,13 +112,13 @@ def model_only_review(rust: dict) -> dict:
     raw = 100 if rust["count"] == 0 else round(100 - min(90, rust["coverage_pct"] * 2.2) - 4 * rust["count"])
     lo, hi = {"GREEN": (75, 100), "AMBER": (45, 74), "RED": (5, 44)}[status]
     score = max(lo, min(hi, raw))  # keep the score inside the band its status stands for
-    defects = [{"type": "rust / corrosion", "severity": {"LOW": "minor", "MEDIUM": "moderate"}.get(rust["risk_level"], "severe"),
+    defects = [{"type": "defect", "severity": {"LOW": "minor", "MEDIUM": "moderate"}.get(rust["risk_level"], "severe"),
                 "location": f"{d['area_pct']}% of the image, confidence {d['score']:.0%}"} for d in rust["detections"][:5]]
     if rust["count"] == 0:
-        summary = "No rust or corrosion was found in this photo. The rust model does not check for other weld defects such as porosity or cracks."
-        action = "No rust-related action needed. Have other defect types checked visually."
+        summary = "No defects or anomalies were found by the AI in this photo."
+        action = "No action needed. Have other defect types checked visually."
     else:
-        summary = f"{_rust_sentence(rust)} Rust near a weld can cause porosity during welding and weakens finished joints over time."
+        summary = f"{_rust_sentence(rust)} Defects near a weld can cause porosity during welding and weakens finished joints over time."
         action = {"GREEN": "Note it and recheck at the next inspection.", "AMBER": "Clean the area back to bright metal and recheck.",
                   "RED": "Stop and have a qualified inspector assess the affected area before further work."}[status]
     return {"is_weld": True, "score": score, "status": status, "defects": defects, "summary": summary, "action": action}
@@ -130,7 +130,7 @@ def _merge(rust: dict, review: dict) -> dict:
         return review
     has_rust = any("rust" in d.get("type", "").lower() or "corros" in d.get("type", "").lower() for d in review["defects"])
     if not has_rust:
-        review["defects"].append({"type": "rust / corrosion (model)",
+        review["defects"].append({"type": "defect (model)",
                                   "severity": {"LOW": "minor", "MEDIUM": "moderate"}.get(rust["risk_level"], "severe"),
                                   "location": f"{rust['coverage_pct']}% of the image"})
     model_status = RISK_TO_STATUS[rust["risk_level"]]
@@ -154,7 +154,7 @@ def analyze_photo(data: bytes, source: str = "website", record: bool = True) -> 
         risk = {"GREEN": "LOW", "AMBER": "MEDIUM", "RED": "HIGH"}[report["status"]]
         if rust["risk_level"] == "CRITICAL":
             risk = "CRITICAL"
-        kind = report["defects"][0]["type"].capitalize() if report["defects"] else "Rust / corrosion"
+        kind = report["defects"][0]["type"].capitalize() if report["defects"] else "AI defect detection"
         inc = store.add_incident(
             camera_id="WEB", camera_name="Website photo inspector", sector="Public", kind=kind,
             object_type="rust" if rust["count"] else "weld_defect", confidence=rust["max_score"] or report["score"] / 100,
@@ -179,7 +179,7 @@ def detect_frame(data: bytes, camera_id: str | None = None, threshold: float | N
     if record and cam and rust["count"] and rust["risk_level"] in ("MEDIUM", "HIGH", "CRITICAL") and store.auto_incident_allowed(cam["camera_id"]):
         ann = segmenter.annotate(img, rust)
         inc = store.add_incident(
-            camera_id=cam["camera_id"], camera_name=cam["name"], sector=cam["sector"], kind="Rust / corrosion", object_type="rust",
+            camera_id=cam["camera_id"], camera_name=cam["name"], sector=cam["sector"], kind="AI defect detection", object_type="defect",
             confidence=rust["max_score"], risk=rust["risk_level"], reasons=[_rust_sentence(rust), "Found on the live feed"],
             source="camera", coverage_pct=rust["coverage_pct"], image_jpeg=encode_jpeg(ann, 80), thumb_b64=_data_url(ann, 480),
         )
@@ -231,9 +231,9 @@ def analyze_video(path: str, filename: str, samples: int = config.VIDEO_SAMPLE_F
         best = max(frames, key=lambda f: f[0])
         ann = segmenter.annotate(best[2], best[3])
         inc = store.add_incident(
-            camera_id="UPLOAD", camera_name=f"Video upload: {filename[:40]}", sector="Uploads", kind="Rust / corrosion", object_type="rust",
+            camera_id="UPLOAD", camera_name=f"Video upload: {filename[:40]}", sector="Uploads", kind="AI defect detection", object_type="defect",
             confidence=max(x["max_score"] for x in hit), risk=risk,
-            reasons=[f"Rust in {len(hit)} of {len(timeline)} sampled frames", f"Peak coverage {peak['coverage_pct']}% at {peak['t']}s", summary],
+            reasons=[f"Defects in {len(hit)} of {len(timeline)} sampled frames", f"Peak coverage {peak['coverage_pct']}% at {peak['t']}s", summary],
             source="video", coverage_pct=peak["coverage_pct"], image_jpeg=encode_jpeg(ann, 80), thumb_b64=_data_url(ann, 480),
         )
         code = inc["incident_code"]
@@ -244,9 +244,9 @@ def analyze_video(path: str, filename: str, samples: int = config.VIDEO_SAMPLE_F
 
 def _video_summary(filename: str, stats: dict, frames: list[np.ndarray]) -> str:
     base = (f"Checked {stats['frames_checked']} frames across {stats['duration_s']} s. "
-            + (f"Rust appeared in {stats['frames_with_rust']} of them, peaking at {stats['peak_coverage_pct']}% of the frame "
+            + (f"Defects appeared in {stats['frames_with_rust']} of them, peaking at {stats['peak_coverage_pct']}% of the frame "
                f"around {stats['peak_time_s']} s (risk: {stats['risk_level'].lower()})."
-               if stats["frames_with_rust"] else "The rust model found no rust or corrosion."))
+               if stats["frames_with_rust"] else "The AI model found no defects or anomalies."))
     if not agent.configured:
         return base
     try:

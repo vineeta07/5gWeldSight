@@ -10,22 +10,22 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-light to-blue flex-center">
-                <span className="text-white font-bold text-lg font-outfit">W</span>
-              </div>
-              <span className="font-outfit font-bold text-2xl gradient-text-static">
+              <img src="/logo.png" alt="WeldSight" className="w-20 h-20 md:w-28 md:h-28 object-contain -mx-3 md:-mx-5" />
+              <span className="font-outfit font-bold text-2xl md:text-3xl text-white">
                 WeldSight
               </span>
             </div>
             <p className="text-gray text-sm leading-relaxed max-w-sm">
-              A 5G-powered AI weld inspection system developed at Delhi Technological 
+              A 5G-powered AI industry inspection system developed at Delhi Technological 
               University. Enabling real-time remote weld quality monitoring through 
               advanced AI and immersive VR technology.
             </p>
             {/* TODO: replace each href="#" with your real profile links */}
             <div className="flex gap-3 mt-2">
               <a
-                href="#"
+                href="https://github.com/vineeta07/5gWeldSight"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full glass-card flex-center text-gray hover:text-blue hover:border-blue/40 transition-all duration-300"
                 aria-label="GitHub"
               >

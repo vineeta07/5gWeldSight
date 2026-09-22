@@ -10,7 +10,7 @@ import { Card, DemoNotice, PageHeader, RiskBadge, Toggle } from "../components/u
 export default function LiveSurveillance() {
   const cameras = useLiveData<Camera[]>("/api/cameras", DEMO_CAMERAS, 30000);
   const [sector, setSector] = useState("All");
-  const [view, setView] = useState<"grid" | "single">("single");
+  const [view, setView] = useState<"grid" | "single">("grid");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [detect, setDetect] = useState(true);
   const [record, setRecord] = useState(true);
@@ -51,7 +51,7 @@ export default function LiveSurveillance() {
     <div className="p-5 max-w-7xl">
       <PageHeader
         title="Live feeds"
-        description="Watch cameras and run the rust model on the selected feed."
+        description="Watch cameras and run the defect model on the selected feed."
         actions={
           <>
             <select value={sector} onChange={(e) => setSector(e.target.value)} className="rounded-md border border-slate-300 bg-white px-2 py-1.5 text-sm" aria-label="Filter by area">
@@ -93,7 +93,7 @@ export default function LiveSurveillance() {
               <input required value={form.stream_url} onChange={(e) => setForm({ ...form, stream_url: e.target.value })} className="mt-1 w-full rounded-md border border-slate-300 px-2 py-1.5 text-sm font-mono" placeholder="rtsp://host:8554/cam" />
             </label>
             <p className="md:col-span-3 text-xs text-slate-500">
-              The backend reads the stream (RTSP, HTTP MJPEG or HLS), runs the rust model and sends the annotated video to the browser. It must be reachable from the server.
+              The backend reads the stream (RTSP, HTTP MJPEG or HLS), runs the defect model and sends the annotated video to the browser. It must be reachable from the server.
             </p>
             <button type="submit" className="rounded-md bg-emerald-600 px-3 py-1.5 text-sm text-white">
               Save camera
@@ -129,15 +129,15 @@ export default function LiveSurveillance() {
             <div className="p-4">
               <FeedPlayer camera={selected} detect={detect && cameras.live} threshold={threshold} record={record} onResult={setResult} />
               <div className="mt-3 flex flex-wrap items-center gap-x-6 gap-y-2">
-                <Toggle checked={detect} onChange={setDetect} label="Rust detection" />
-                <Toggle checked={record} onChange={setRecord} label="File a report when rust is found" />
+                <Toggle checked={detect} onChange={setDetect} label="Defect detection" />
+                <Toggle checked={record} onChange={setRecord} label="File a report when a defect is found" />
                 <label className="flex items-center gap-2 text-sm text-slate-700">
                   Minimum confidence
                   <input type="range" min={0.3} max={0.95} step={0.05} value={threshold} onChange={(e) => setThreshold(Number(e.target.value))} />
                   <span className="w-10 tabular-nums">{Math.round(threshold * 100)}%</span>
                 </label>
               </div>
-              {!cameras.live && <p className="mt-2 text-xs text-slate-500">Rust detection needs the backend.</p>}
+              {!cameras.live && <p className="mt-2 text-xs text-slate-500">Defect detection needs the backend.</p>}
             </div>
           </Card>
 
@@ -165,9 +165,9 @@ export default function LiveSurveillance() {
             <Card title="Latest check">
               <div className="p-4 text-sm">
                 {!result ? (
-                  <p className="text-slate-500">{detect ? "Waiting for the first frame…" : "Turn on rust detection to check this feed."}</p>
+                  <p className="text-slate-500">{detect ? "Waiting for the first frame…" : "Turn on defect detection to check this feed."}</p>
                 ) : result.count === 0 ? (
-                  <p className="text-slate-600">No rust in the latest frame.</p>
+                  <p className="text-slate-600">No defects in the latest frame.</p>
                 ) : (
                   <>
                     <div className="flex items-center justify-between">

@@ -17,7 +17,7 @@ const points = [
   {
     icon: "⭐",
     title: "Outstanding response",
-    text: "Feedback from industry experts, educators and students backed our goal: weld inspection that is safer, smarter and easier to access.",
+    text: "Feedback from industry experts, educators and students backed our goal: industry inspection that is safer, smarter and easier to access.",
   },
 ];
 
@@ -26,11 +26,11 @@ const Exhibition = () => {
   useReveal(sectionRef);
 
   return (
-    <section id="exhibition" ref={sectionRef} className="w-full overflow-hidden bg-zinc section-pad">
+    <section id="exhibition" ref={sectionRef} className="w-full overflow-hidden bg-zinc pb-24 pt-8 md:pt-12">
       <div className="screen-max-width page-gutter">
         <SectionHeader
-          title="Showcased at DTU."
-          subtitle="Innovation Exhibition at Delhi Technological University."
+          title="Showcased at DTU"
+          subtitle="Innovation Exhibition at Delhi Technological University"
         />
 
         <div className="flex flex-col gap-12 md:gap-16">
@@ -49,7 +49,7 @@ const Exhibition = () => {
                 </h3>
                 <p className="text-gray text-sm sm:text-base leading-relaxed">
                   We presented the prototype to the Education Minister and the Vice Chairman of DTU,
-                  who took a keen interest in 5G-powered weld inspection.
+                  who took a keen interest in 5G-powered industry inspection.
                 </p>
               </div>
             </figcaption>

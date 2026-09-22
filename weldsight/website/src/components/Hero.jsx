@@ -55,7 +55,7 @@ const Hero = () => {
       ref={sectionRef}
       className="relative w-full h-[100svh] min-h-[560px] flex flex-col bg-black pt-[var(--nav-h)] overflow-hidden"
     >
-      <h1 className="sr-only">WeldSight: 5G-powered AI weld inspection</h1>
+      <h1 className="sr-only">WeldSight: 5G-powered AI industry inspection</h1>
 
       <div data-hero-stage className="relative flex-1 min-h-0 will-change-transform">
         <video
@@ -84,14 +84,11 @@ const Hero = () => {
 
       <div className="relative shrink-0 screen-max-width page-gutter w-full pb-12 md:pb-16 flex flex-col items-center text-center">
         <p data-hero-in className="text-gray text-2xl md:text-3xl font-semibold">
-          5G-powered AI weld inspection
+          5G-powered AI industry inspection
         </p>
         <div data-hero-in className="mt-6 flex flex-col sm:flex-row items-center gap-3">
           <a href="#highlights" className="btn">
             Watch the demo
-          </a>
-          <a href="#inspector" className="btn-outline">
-            Try the AI inspector
           </a>
         </div>
         <p data-hero-in className="mt-4 text-xs text-gray hidden md:block">

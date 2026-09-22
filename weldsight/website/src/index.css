@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --nav-h: 48px; /* Apple-style slim navbar */
+  --nav-h: 96px; /* Increased to fit the larger logo */
 }
 
 html {

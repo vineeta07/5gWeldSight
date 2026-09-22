@@ -77,7 +77,7 @@ export default function CommandCenter() {
           title={mainCamera ? `Main feed: ${mainCamera.name}` : "Main feed"}
           actions={
             <div className="flex items-center gap-4">
-              <Toggle checked={detect} onChange={setDetect} label="Rust detection" />
+              <Toggle checked={detect} onChange={setDetect} label="Defect detection" />
               <Link to="/surveillance" className="text-sm text-emerald-700 hover:underline">
                 All feeds
               </Link>
@@ -86,7 +86,7 @@ export default function CommandCenter() {
         >
           <div className="p-4">
             <FeedPlayer camera={mainCamera} detect={detect && incidents.live} />
-            {!incidents.live && <p className="mt-2 text-xs text-slate-500">Rust detection needs the backend.</p>}
+            {!incidents.live && <p className="mt-2 text-xs text-slate-500">Defect detection needs the backend.</p>}
           </div>
         </Card>
 
