@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { navLinks } from "../constants";
 import { openChat } from "../utils/chat";
 import { DASHBOARD_URL } from "../utils/api";
+import logoUrl from "../logo.png";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -63,7 +64,7 @@ const Navbar = () => {
     >
       <nav className="screen-max-width page-gutter h-full flex items-center justify-between gap-6">
         <a href="#hero" className="flex items-center gap-2 shrink-0" aria-label="WeldSight home">
-          <img src="/logo.png" alt="WeldSight" className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 object-contain" />
+          <img src={logoUrl} alt="WeldSight" className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 object-contain" />
           <span className="font-bold text-lg sm:text-xl md:text-2xl tracking-wide text-white md:-ml-2">WeldSight</span>
         </a>
 

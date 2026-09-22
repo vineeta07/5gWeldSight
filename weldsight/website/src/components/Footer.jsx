@@ -1,5 +1,7 @@
 import { navLinks, techStack } from "../constants";
 import { openChat } from "../utils/chat";
+import { DASHBOARD_URL } from "../utils/api";
+import logoUrl from "../logo.png";
 
 const Footer = () => {
   return (
@@ -9,8 +11,10 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {/* Brand Column */}
           <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-2">
-              <img src="/logo.png" alt="WeldSight" className="w-20 h-20 md:w-28 md:h-28 object-contain -mx-3 md:-mx-5" />
+            <div className="flex items-center gap-1 md:gap-3 shrink-0">
+              <div className="w-20 h-20 md:w-28 md:h-28 overflow-hidden rounded-full flex items-center justify-center shrink-0">
+                <img src={logoUrl} alt="WeldSight" className="w-20 h-20 md:w-28 md:h-28 object-contain -mx-3 md:-mx-5" />
+              </div>
               <span className="font-outfit font-bold text-2xl md:text-3xl text-white">
                 WeldSight
               </span>

@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import { useEffect } from "react";
+import logoUrl from "../../logo.png";
 
 interface Props {
   children: ReactNode;
@@ -53,7 +55,7 @@ export default function AuthLayout({ children }: Props) {
         {/* Content — branding */}
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-2">
-            <img src="/logo.png" alt="WeldSight" className="w-24 h-24 md:w-32 md:h-32 object-contain shrink-0" />
+            <img src={logoUrl} alt="WeldSight" className="w-24 h-24 md:w-32 md:h-32 object-contain shrink-0" />
             <div>
               <div className="text-blue-300 font-bold text-xl tracking-[0.3em] mt-1" style={{ fontFamily: "Inter, system-ui, sans-serif" }}>WeldSight</div>
               <div className="text-blue-200/40 font-mono text-[10px]">Industry inspection</div>

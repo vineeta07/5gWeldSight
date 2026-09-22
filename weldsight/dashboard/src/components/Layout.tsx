@@ -9,6 +9,7 @@ import { useHealth } from "../hooks/useBackend";
 import { SITE_URL } from "../lib/api";
 import { OPEN_ASSISTANT_EVENT } from "../lib/assistant";
 import AssistantPanel from "./AssistantPanel";
+import logoUrl from "../logo.png";
 
 const NAV_ITEMS = [
   { path: "/", label: "Overview", icon: LayoutDashboard, exact: true },
@@ -77,7 +78,7 @@ export default function Layout() {
       <aside className="flex flex-col border-r border-slate-200 bg-white transition-all duration-200 flex-shrink-0" style={{ width: collapsed ? 80 : 280 }}>
         <div className="flex items-center gap-3 px-4 py-4 border-b border-slate-200 min-h-[80px]">
           <button onClick={() => collapsed && setCollapsed(false)} className="flex-shrink-0 outline-none cursor-pointer" title={collapsed ? "Expand sidebar" : ""}>
-            <img src="/logo.png" alt="WeldSight" className={`object-contain transition-all duration-200 ${collapsed ? "w-10 h-10 hover:scale-105" : "w-12 h-12 md:w-16 md:h-16"}`} />
+            <img src={logoUrl} alt="WeldSight" className={`object-contain transition-all duration-200 ${collapsed ? "w-10 h-10 hover:scale-105" : "w-12 h-12 md:w-16 md:h-16"}`} />
           </button>
           {!collapsed && (
             <div className="min-w-0 flex-1">
