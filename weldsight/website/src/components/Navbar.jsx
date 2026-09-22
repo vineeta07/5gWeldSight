@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { navLinks } from "../constants";
 import { openChat } from "../utils/chat";
 import { DASHBOARD_URL } from "../utils/api";
-const logoUrl = "/logo.png";
+import logoUrl from "../logo.png";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
