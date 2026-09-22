@@ -21,7 +21,7 @@ app.add_middleware(
     allow_origins=config.ALLOWED_ORIGINS,
     allow_origin_regex=config.ALLOWED_ORIGIN_REGEX,
     allow_methods=["GET", "POST", "PATCH", "DELETE"],
-    allow_headers=["Content-Type"],
+    allow_headers=["*"],
 )
 
 for r in (health.router, chat.router, vision.router, dashboard.router):
