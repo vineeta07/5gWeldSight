@@ -9,7 +9,7 @@ import { useHealth } from "../hooks/useBackend";
 import { SITE_URL } from "../lib/api";
 import { OPEN_ASSISTANT_EVENT } from "../lib/assistant";
 import AssistantPanel from "./AssistantPanel";
-import { logoBase64 as logoUrl } from "../logoBase64";
+import logoUrl from "../logo.png";
 
 const NAV_ITEMS = [
   { path: "/", label: "Overview", icon: LayoutDashboard, exact: true },
@@ -108,7 +108,7 @@ export default function Layout() {
       <aside className="flex flex-col border-r border-slate-200 bg-white transition-all duration-200 flex-shrink-0" style={{ width: collapsed ? 80 : 240 }}>
         <div className={`flex items-center gap-0 p-0 border-b border-slate-200 min-h-[80px] ${collapsed ? 'justify-center w-full' : ''}`}>
           <button onClick={() => collapsed && setCollapsed(false)} className={`flex-shrink-0 outline-none cursor-pointer ${collapsed ? '' : '-ml-2'}`} title={collapsed ? "Expand sidebar" : ""}>
-            <img src="/logo.png?v=2" alt="WeldSight" className={`object-contain transition-all duration-200 ${collapsed ? "w-12 h-12 hover:scale-105" : "w-20 h-20 md:w-24 md:h-24"}`} />
+            <img src={logoUrl} alt="WeldSight" className={`object-contain transition-all duration-200 ${collapsed ? "w-12 h-12 hover:scale-105" : "w-20 h-20 md:w-24 md:h-24"}`} />
           </button>
           {!collapsed && (
             <div className="min-w-0 flex-1 ml-0">

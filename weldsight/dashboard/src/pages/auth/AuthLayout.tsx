@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { useEffect } from "react";
-import { logoBase64 as logoUrl } from "../../logoBase64";
+import logoUrl from "../../logo.png";
 
 interface Props {
   children: ReactNode;
