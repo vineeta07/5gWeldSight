@@ -66,11 +66,11 @@ export default function AuthLayout({ children }: Props) {
         <div className="relative z-10 space-y-6">
           <div>
             <p className="text-blue-100/70 text-sm leading-relaxed max-w-sm" style={{ fontFamily: "Inter, sans-serif" }}>
-              Watch weld cameras, review defect reports, and check photos and videos for defects.</p>
+              Watch inspection cameras, review defect reports, and check photos and videos for rust, cracks, and other defects.</p>
           </div>
 
           <div className="space-y-2.5">
-            {["Real-time Weld Defect Detection", "5G Live Weld Streaming", "AI Quality Scoring & Analysis", "VR Weld Inspection Review"].map((item) => (
+            {["Real-time Defect Detection (Rust, Cracks)", "5G Live Inspection Streaming", "AI Quality Scoring & Analysis", "VR Defect Inspection Review"].map((item) => (
               <div key={item} className="flex items-center gap-2.5">
                 <div className="w-1.5 h-1.5 bg-blue-400 rounded-full" />
                 <span className="text-blue-200/60 text-xs font-mono tracking-wide">{item}</span>
