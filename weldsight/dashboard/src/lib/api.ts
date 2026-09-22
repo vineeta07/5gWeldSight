@@ -24,10 +24,11 @@ export async function api<T>(path: string, init: RequestInit = {}, timeoutMs = 2
   const timer = window.setTimeout(() => ctrl.abort(), timeoutMs);
   const isForm = typeof FormData !== "undefined" && init.body instanceof FormData;
   try {
+    const headers = isForm || !init.body ? init.headers : { "Content-Type": "application/json", ...(init.headers || {}) };
     const res = await fetch(apiUrl(path), {
       ...init,
       signal: ctrl.signal,
-      headers: isForm || !init.body ? init.headers : { "Content-Type": "application/json", ...(init.headers || {}) },
+      headers: { ...headers, "Bypass-Tunnel-Reminder": "true" },
     });
     if (!res.ok) {
       let message = `Request failed (${res.status})`;

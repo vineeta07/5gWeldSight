@@ -66,7 +66,10 @@ const WeldInspector = () => {
       const image = await toCompressedBase64(file);
       const res = await fetch(apiUrl("/api/analyze"), {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Bypass-Tunnel-Reminder": "true",
+        },
         body: JSON.stringify({ image, mime_type: "image/jpeg" }),
       });
       if (!res.ok) throw new Error(`Server replied ${res.status}`);

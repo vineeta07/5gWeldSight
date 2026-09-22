@@ -52,7 +52,10 @@ const ChatWidget = () => {
     try {
       const res = await fetch(apiUrl("/api/chat"), {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Bypass-Tunnel-Reminder": "true"
+        },
         body: JSON.stringify({
           messages: next.slice(-12).map(({ role, content }) => ({ role, content })), // keep context small
           app: "website",
