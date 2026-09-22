@@ -5,15 +5,12 @@ import './index.css'
 import { registerSW } from 'virtual:pwa-register'
 
 // Register the PWA service worker explicitly
-registerSW({ immediate: true })
-
-// @ts-ignore
-window._deferredPrompt = null;
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  // @ts-ignore
-  window._deferredPrompt = e;
-});
+registerSW({
+  immediate: true,
+  onRegisterError(error) {
+    console.error('Service worker registration failed:', error);
+  },
+})
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

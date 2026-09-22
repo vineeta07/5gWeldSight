@@ -24,9 +24,8 @@ export default defineConfig(({ mode }) => {
         manifestFilename: 'manifest.json',
         devOptions: { enabled: true },
         manifest: {
-          id: '/dashboard-v2',
-          name: 'WeldSight App',
-          short_name: 'WeldSight App',
+          name: 'WeldSight',
+          short_name: 'WeldSight',
           theme_color: '#ffffff',
           background_color: '#ffffff',
           display: 'standalone',
@@ -36,13 +35,25 @@ export default defineConfig(({ mode }) => {
               src: '/pwa-192x192.png',
               sizes: '192x192',
               type: 'image/png',
-              purpose: 'any maskable'
+              purpose: 'any'
+            },
+            {
+              src: '/pwa-192x192.png',
+              sizes: '192x192',
+              type: 'image/png',
+              purpose: 'maskable'
             },
             {
               src: '/pwa-512x512.png',
               sizes: '512x512',
               type: 'image/png',
-              purpose: 'any maskable'
+              purpose: 'any'
+            },
+            {
+              src: '/pwa-512x512.png',
+              sizes: '512x512',
+              type: 'image/png',
+              purpose: 'maskable'
             }
           ]
         },

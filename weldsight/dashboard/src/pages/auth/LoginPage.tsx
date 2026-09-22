@@ -13,20 +13,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
 
-  useEffect(() => {
-    // @ts-ignore
-    if (window._deferredPrompt) {
-      // @ts-ignore
-      setDeferredPrompt(window._deferredPrompt);
-    }
-    const handleBeforeInstallPrompt = (e: any) => {
-      setDeferredPrompt(e);
-    };
-    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-    return () => window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -70,20 +70,6 @@ export default function Layout() {
   const nav = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const [assistantOpen, setAssistantOpen] = useState(false);
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
-
-  useEffect(() => {
-    // @ts-ignore
-    if (window._deferredPrompt) {
-      // @ts-ignore
-      setDeferredPrompt(window._deferredPrompt);
-    }
-    const handleBeforeInstallPrompt = (e: any) => {
-      setDeferredPrompt(e);
-    };
-    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-    return () => window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-  }, []);
 
   useEffect(() => {
     const open = () => setAssistantOpen(true);
