@@ -1,7 +1,8 @@
 {
+  "cleanUrls": true,
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!api/|assets/|pwa-|manifest\\.webmanifest|sw\\.js|workbox-).*\\.?[^/]*$)",
       "destination": "/index.html"
     }
   ]
