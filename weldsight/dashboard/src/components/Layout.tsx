@@ -171,7 +171,7 @@ export default function Layout() {
             {deferredPrompt && (
               <button
                 onClick={handleInstallClick}
-                className="inline-flex sm:hidden items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold bg-emerald-600 text-white shadow-sm hover:bg-emerald-700 animate-pulse"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold bg-emerald-600 text-white shadow-sm hover:bg-emerald-700 animate-pulse"
               >
                 <Download size={14} />
                 Install App
