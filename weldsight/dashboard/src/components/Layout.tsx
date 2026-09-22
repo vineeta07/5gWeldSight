@@ -26,7 +26,7 @@ const NAV_ITEMS = [
 
 function ConnectionStatus() {
   const { connection, health } = useHealth();
-  const label =
+  const labelDesktop =
     connection === "checking"
       ? "Connecting…"
       : connection === "offline"
@@ -34,6 +34,14 @@ function ConnectionStatus() {
         : health && !health.model.loaded
           ? "Connected, model loading"
           : "Connected";
+
+  const labelMobile =
+    connection === "checking"
+      ? "Connecting…"
+      : connection === "offline"
+        ? "Offline"
+        : "Connected";
+
   const dot = connection === "online" ? (health?.model.loaded ? "bg-emerald-500" : "bg-amber-500") : connection === "offline" ? "bg-red-500" : "bg-slate-400";
   const title =
     connection === "online" && health
@@ -42,7 +50,8 @@ function ConnectionStatus() {
   return (
     <span className="inline-flex flex-shrink-0 whitespace-nowrap items-center gap-1.5 text-xs text-slate-600" title={title}>
       <span className={`w-2 h-2 rounded-full flex-shrink-0 ${dot}`} />
-      {label}
+      <span className="hidden sm:inline">{labelDesktop}</span>
+      <span className="inline sm:hidden">{labelMobile}</span>
     </span>
   );
 }
@@ -118,8 +127,7 @@ export default function Layout() {
               end={exact}
               title={collapsed ? label : undefined}
               className={({ isActive }) =>
-                `flex items-center gap-3 mx-2 my-0.5 px-2.5 py-2 rounded-md text-sm transition-colors ${
-                  isActive ? "bg-emerald-50 text-emerald-800 font-medium" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                `flex items-center gap-3 mx-2 my-0.5 px-2.5 py-2 rounded-md text-sm transition-colors ${isActive ? "bg-emerald-50 text-emerald-800 font-medium" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
                 }`
               }
             >
