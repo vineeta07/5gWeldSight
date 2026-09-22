@@ -21,6 +21,8 @@ export default defineConfig(({ mode }) => {
       react(),
       VitePWA({
         registerType: 'autoUpdate',
+        useCredentials: true,
+        devOptions: { enabled: true },
         manifest: {
           name: 'WeldSight Dashboard',
           short_name: 'WeldSight',
