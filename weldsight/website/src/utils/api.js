@@ -5,4 +5,8 @@ export const API_BASE = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
 export const apiUrl = (path) => `${API_BASE}${path}`;
 
 // The inspection dashboard (a separate app)
-export const DASHBOARD_URL = (import.meta.env.VITE_DASHBOARD_URL || "http://localhost:8443").replace(/\/$/, "");
+let dashUrl = (import.meta.env.VITE_DASHBOARD_URL || "http://localhost:8443").replace(/\/$/, "");
+if (dashUrl && !dashUrl.startsWith("http://") && !dashUrl.startsWith("https://")) {
+  dashUrl = "https://" + dashUrl;
+}
+export const DASHBOARD_URL = dashUrl;
