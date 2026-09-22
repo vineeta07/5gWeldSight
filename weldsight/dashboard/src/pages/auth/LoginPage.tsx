@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Download } from "lucide-react";
 import { useAuth } from "../../hooks/useAuth";
 import AuthLayout from "./AuthLayout";
 
@@ -10,6 +11,23 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: any) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+    return () => window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === "accepted") setDeferredPrompt(null);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,10 +56,21 @@ export default function LoginPage() {
   return (
     <AuthLayout>
       <div className="animate-fade-in">
-        <div className="mb-8">
-          <div className="font-mono text-xs text-blue-700 mb-2 font-bold">WeldSight</div>
-          <h1 className="font-bold text-3xl text-slate-900 tracking-tight mb-2" style={{ fontFamily: "Inter, system-ui, sans-serif" }}>Sign in</h1>
-          <p className="text-slate-500 text-sm">Use your inspector account to open the dashboard.</p>
+        <div className="mb-8 flex items-start justify-between">
+          <div>
+            <div className="font-mono text-xs text-blue-700 mb-2 font-bold">WeldSight</div>
+            <h1 className="font-bold text-3xl text-slate-900 tracking-tight mb-2" style={{ fontFamily: "Inter, system-ui, sans-serif" }}>Sign in</h1>
+            <p className="text-slate-500 text-sm">Use your inspector account to open the dashboard.</p>
+          </div>
+          {deferredPrompt && (
+            <button
+              onClick={handleInstallClick}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold bg-emerald-600 text-white shadow-sm hover:bg-emerald-700 animate-pulse mt-4"
+            >
+              <Download size={14} />
+              Install App
+            </button>
+          )}
         </div>
 
         {error && (
