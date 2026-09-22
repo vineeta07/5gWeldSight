@@ -28,7 +28,7 @@ from . import config
 log = logging.getLogger("weldsight.model")
 
 INPUT_SIZE = 384
-CLASS_NAMES = {0: "rust"}  # index 1 never fires in this model
+CLASS_NAMES = {0: "Crack"}  # index 1 never fires in this model
 
 
 def _sigmoid(x: np.ndarray) -> np.ndarray:
