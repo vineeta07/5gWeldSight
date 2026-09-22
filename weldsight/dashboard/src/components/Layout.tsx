@@ -9,7 +9,7 @@ import { useHealth } from "../hooks/useBackend";
 import { SITE_URL } from "../lib/api";
 import { OPEN_ASSISTANT_EVENT } from "../lib/assistant";
 import AssistantPanel from "./AssistantPanel";
-import logoUrl from "../logo.png";
+import { logoBase64 as logoUrl } from "../logoBase64";
 
 const NAV_ITEMS = [
   { path: "/", label: "Overview", icon: LayoutDashboard, exact: true },
