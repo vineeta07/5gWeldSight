@@ -70,6 +70,23 @@ export default function Layout() {
   const nav = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const [assistantOpen, setAssistantOpen] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: any) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+    return () => window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === "accepted") setDeferredPrompt(null);
+  };
 
   useEffect(() => {
     const open = () => setAssistantOpen(true);
@@ -151,6 +168,15 @@ export default function Layout() {
         <header className="flex items-center justify-between px-5 h-14 border-b border-slate-200 bg-white flex-shrink-0">
           <ConnectionStatus />
           <div className="flex items-center gap-4">
+            {deferredPrompt && (
+              <button
+                onClick={handleInstallClick}
+                className="px-3 py-1.5 text-xs font-semibold bg-emerald-600 text-white rounded-md shadow hover:bg-emerald-700 transition-colors flex items-center gap-1 animate-pulse"
+              >
+                <Download size={14} />
+                Install App
+              </button>
+            )}
             <Clock />
           </div>
         </header>
@@ -165,3 +191,4 @@ export default function Layout() {
     </div>
   );
 }
+
