@@ -24,12 +24,14 @@ export default defineConfig(({ mode }) => {
         manifestFilename: 'manifest.json',
         devOptions: { enabled: true },
         manifest: {
-          name: 'WeldSight Dashboard',
-          short_name: 'Dashboard',
+          id: '/v2',
+          name: 'WeldSight Dashboard v2',
+          short_name: 'Dash v2',
           theme_color: '#ffffff',
           background_color: '#ffffff',
           display: 'standalone',
           start_url: '/',
+          scope: '/',
           icons: [
             {
               src: '/pwa-192x192.png',
