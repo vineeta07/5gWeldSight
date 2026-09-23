@@ -24,8 +24,9 @@ export default defineConfig(({ mode }) => {
         manifestFilename: 'manifest.json',
         devOptions: { enabled: true },
         manifest: {
-          name: 'WeldSight',
-          short_name: 'WeldSight',
+          id: '/dashboard',
+          name: 'WeldSight Dashboard',
+          short_name: 'WeldSight Dash',
           theme_color: '#ffffff',
           background_color: '#ffffff',
           display: 'standalone',
