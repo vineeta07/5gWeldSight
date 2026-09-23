@@ -59,7 +59,10 @@ export default defineConfig(({ mode }) => {
         },
         workbox: {
           navigateFallback: '/index.html',
-          navigateFallbackAllowlist: [/^(?!\/__).*/]
+          navigateFallbackAllowlist: [/^(?!\/__).*/],
+          cleanupOutdatedCaches: true,
+          clientsClaim: true,
+          skipWaiting: true
         }
       }),
       tailwindcss(),
