@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PWA install check</title>
+<style>
+  body { font: 15px/1.6 system-ui, sans-serif; margin: 0; padding: 24px; background: #0b0b0c; color: #e7e7e7; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  p.sub { color: #9b9b9b; margin: 0 0 20px; }
+  .row { display: flex; gap: 10px; padding: 10px 12px; border: 1px solid #262629; border-radius: 8px; margin-bottom: 8px; background: #141416; }
+  .tag { flex: 0 0 64px; font-weight: 600; }
+  .ok { color: #46c46a; } .bad { color: #ff6b6b; } .warn { color: #ffb020; } .info { color: #7fb2ff; }
+  .what { flex: 1; min-width: 0; }
+  .what b { display: block; }
+  .what span { color: #a5a5a5; word-break: break-all; font-size: 13px; }
+  #verdict { padding: 14px; border-radius: 8px; margin: 18px 0; font-weight: 600; }
+  button { background: #2b7fff; color: #fff; border: 0; padding: 10px 16px; border-radius: 8px; font-size: 15px; cursor: pointer; }
+  pre { background: #141416; border: 1px solid #262629; border-radius: 8px; padding: 12px; overflow: auto; font-size: 12px; color: #c9c9c9; }
+</style>
+</head>
+<body>
+<h1>PWA install check</h1>
+<p class="sub">Open the app once first, then open this page at the same address (for example https://your-dashboard.vercel.app/pwa-check.html).</p>
+<div id="verdict">Running checks…</div>
+<div id="out"></div>
+<p><button id="install" hidden>Install this app</button></p>
+<h2 style="font-size:16px">Copy this to share</h2>
+<pre id="dump">…</pre>
+
+<script>
+const out = document.getElementById("out");
+const results = [];
+function add(status, title, detail) {
+  results.push({ status, title, detail: String(detail ?? "") });
+  const cls = { PASS: "ok", FAIL: "bad", WARN: "warn", INFO: "info" }[status];
+  out.insertAdjacentHTML("beforeend",
+    `<div class="row"><div class="tag ${cls}">${status}</div><div class="what"><b>${title}</b><span>${String(detail ?? "").replace(/</g, "&lt;")}</span></div></div>`);
+}
+
+let promptEvent = null;
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  promptEvent = e;
+  const b = document.getElementById("install");
+  b.hidden = false;
+  b.onclick = () => promptEvent.prompt();
+});
+
+(async () => {
+  add("INFO", "Page address", location.href);
+
+  // 1. secure context
+  if (window.isSecureContext) add("PASS", "Secure page", "HTTPS or localhost");
+  else add("FAIL", "Not a secure page", "Chrome only installs apps over HTTPS or on localhost. Opening the dev server by IP address (like 192.168.x.x) will never show an install option.");
+
+  // 2. already installed?
+  const standalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+  if (standalone) add("WARN", "Running as an installed app", "You already installed it, so no install option will appear in the browser tab.");
+
+  // 3. manifest link
+  const link = document.querySelector('link[rel="manifest"]');
+  let manifestUrl = link ? new URL(link.getAttribute("href"), location.href).href : null;
+  if (!manifestUrl) {
+    // this page is plain HTML, so also try the usual locations
+    for (const guess of ["manifest.json", "manifest.webmanifest", "/manifest.json"]) {
+      try {
+        const r = await fetch(new URL(guess, location.href), { cache: "no-store" });
+        if (r.ok) { manifestUrl = new URL(guess, location.href).href; break; }
+      } catch {}
+    }
+    add(manifestUrl ? "INFO" : "FAIL", "Manifest link", manifestUrl
+      ? "This test page has no <link rel=manifest>, found one at " + manifestUrl + " instead. Check your app's index.html has the link."
+      : "No manifest found. Your app's page must have <link rel=\"manifest\" href=\"/manifest.json\">.");
+  } else {
+    add("PASS", "Manifest link found", manifestUrl);
+  }
+
+  let manifest = null;
+  if (manifestUrl) {
+    try {
+      const res = await fetch(manifestUrl, { cache: "no-store" });
+      const type = res.headers.get("content-type") || "";
+      const text = await res.text();
+      if (!res.ok) add("FAIL", "Manifest didn't load", `HTTP ${res.status}. If this is 401 or 403, Vercel deployment protection is blocking it.`);
+      else if (text.trim().startsWith("<")) add("FAIL", "Manifest returned HTML, not JSON", "Your host is rewriting every path to index.html. Exclude files with a dot from the SPA rewrite.");
+      else {
+        manifest = JSON.parse(text);
+        add("PASS", "Manifest loaded", `${type || "no content-type"} · name: ${manifest.name}`);
+      }
+    } catch (e) {
+      add("FAIL", "Manifest couldn't be read", e.message);
+    }
+  }
+
+  if (manifest) {
+    // 4. is it the right app's manifest?
+    const origin = location.origin;
+    const scope = new URL(manifest.scope || ".", manifestUrl).href;
+    const start = new URL(manifest.start_url || ".", manifestUrl).href;
+    add("INFO", "Identity", `name: ${manifest.name} · id: ${manifest.id ?? "(none)"} · scope: ${scope} · start_url: ${start}`);
+    if (!location.href.startsWith(scope)) add("FAIL", "This page is outside the manifest scope", `scope is ${scope} but you are on ${location.href}. Chrome will not install from here.`);
+    else add("PASS", "Page is inside the scope", scope);
+    if (!start.startsWith(scope)) add("FAIL", "start_url is outside the scope", `${start} vs ${scope}`);
+    if (!manifest.name && !manifest.short_name) add("FAIL", "Manifest has no name", "name or short_name is required.");
+    const display = manifest.display || (manifest.display_override || [])[0];
+    if (["standalone", "fullscreen", "minimal-ui"].includes(display)) add("PASS", "Display mode", display);
+    else add("FAIL", "Display mode not installable", `display is "${display}". Use standalone.`);
+
+    // 5. start_url reachable
+    try {
+      const r = await fetch(start, { cache: "no-store" });
+      add(r.ok ? "PASS" : "FAIL", "start_url loads", `HTTP ${r.status} · ${start}`);
+    } catch (e) { add("FAIL", "start_url unreachable", e.message); }
+
+    // 6. icons
+    const icons = manifest.icons || [];
+    if (!icons.length) add("FAIL", "No icons in manifest", "Chrome needs a square PNG of at least 192px.");
+    let bigEnough = false;
+    for (const icon of icons) {
+      const url = new URL(icon.src, manifestUrl).href;
+      try {
+        const r = await fetch(url, { cache: "no-store" });
+        if (!r.ok) { add("FAIL", "Icon missing", `HTTP ${r.status} · ${url}`); continue; }
+        const blob = await r.blob();
+        const bmp = await createImageBitmap(blob).catch(() => null);
+        if (!bmp) { add("FAIL", "Icon can't be decoded", `${url} · this causes "app can't be installed".`); continue; }
+        const declared = (icon.sizes || "").split(" ")[0];
+        const actual = `${bmp.width}x${bmp.height}`;
+        const match = declared === actual;
+        if (bmp.width >= 192 && bmp.height >= 192 && match) bigEnough = true;
+        add(match ? "PASS" : "FAIL", "Icon " + (icon.sizes || ""),
+          `${url} · actual ${actual} · type ${blob.type}` + (match ? "" : " · declared size does not match the real image"));
+      } catch (e) { add("FAIL", "Icon failed", `${url} · ${e.message}`); }
+    }
+    if (icons.length && !bigEnough) add("FAIL", "No usable large icon", "Need a correctly declared PNG of 192x192 or bigger.");
+  }
+
+  // 7. service worker
+  if (!("serviceWorker" in navigator)) add("FAIL", "Service workers unsupported", navigator.userAgent);
+  else {
+    const regs = await navigator.serviceWorker.getRegistrations();
+    if (!regs.length) add("FAIL", "No service worker registered", "Open the app itself once (its normal address), then come back and reload this page. If it still says none, the app is not registering its worker.");
+    else regs.forEach(r => add(r.active ? "PASS" : "WARN", "Service worker", `scope ${r.scope} · ${r.active ? "active" : "not active yet"}`));
+    add(navigator.serviceWorker.controller ? "PASS" : "WARN", "Page is controlled by a service worker",
+      navigator.serviceWorker.controller ? navigator.serviceWorker.controller.scriptURL : "Reload once; a fresh service worker controls the page only after a reload.");
+  }
+
+  // 8. install prompt
+  await new Promise(r => setTimeout(r, 3000));
+  if (promptEvent) add("PASS", "Chrome offered the install prompt", "Use the button below to install.");
+  else if (standalone) add("INFO", "No prompt because it's already installed", "");
+  else add("WARN", "Chrome did not offer an install prompt", "If everything above passes, the app is probably already installed (check chrome://apps), or this browser doesn't support installing.");
+
+  const fails = results.filter(r => r.status === "FAIL");
+  const v = document.getElementById("verdict");
+  v.textContent = fails.length ? `${fails.length} problem(s) found: ${fails.map(f => f.title).join("; ")}` : "All install requirements passed.";
+  v.style.background = fails.length ? "#3a1416" : "#12301c";
+  v.style.color = fails.length ? "#ff9d9d" : "#8ef0ab";
+  document.getElementById("dump").textContent =
+    `page: ${location.href}\nsecure: ${window.isSecureContext}\nua: ${navigator.userAgent}\n\n` +
+    results.map(r => `[${r.status}] ${r.title} — ${r.detail}`).join("\n");
+})();
+</script>
+</body>
+</html>
